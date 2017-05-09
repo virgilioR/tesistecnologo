@@ -1,0 +1,75 @@
+{% set i=0 %}
+{% set idaiant=0 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado fotos</title>
+</head>
+<body>
+    <h1>Misiones</h1>
+    <form name="formmision" action="listadofotos" method="post">
+    Elija una misión:
+    <select name="mision" id="mision">
+    {% for m in misiones %}
+        <option value="{{ i }}"
+        {% if msel != None and m.getId()==msel.getId() %} selected="selected" {% endif %}
+        >Misión {{ m.getId() }}</option>
+        {% set i=i+1 %}
+    {% else %}
+        <em>No hay ninguna misión para mostrar</em>
+    {% endfor %}
+    </select>
+    <br/>
+    <input type="submit" name="enviar" value="Buscar"/>
+    <input type="submit" name="calif" value="Calificar"/>
+    </form>
+
+
+    <br/>
+
+    {% if msel != None %}
+        <h3>Misión {{ msel.getId() }}</h3>
+        <p>Tiempo: {{ msel.getTiempo() }}<br/>
+        DistTotal: {{ msel.getDistTotal() }}<br/>
+        ConsumoBateria: {{ msel.getConsumoBateria() }}<br/>
+        BateriaFinal: {{ msel.getBateriaFinal() }}<br/>
+        Resolucion: {{ msel.getResolucion() }}<br/>
+        Demora: {{ msel.getDemora() }}<br/>
+        Umbral: {{ msel.getUmbral() }}<br/>
+
+        </p>
+        <p>Recorrido: {{ recorrido["idr"] }}<br/>
+        Padrón: {{ recorrido["padron"] }}<br/>
+        {% if recorrido["tipo"]==0 %}
+        Tipo: Estacas<br/>
+        {% else %}
+        Tipo: Mapping<br/>
+        {% endif %}
+        Velocidad: {{ recorrido["vel"] }}
+        Altura: {{ recorrido["alt"] }}<br/>
+        Fotos x estaca: {{ recorrido["cantpuntos"] }}<br/>
+        Cuenta/Dist: {{ recorrido["calculodist"] }}<br/>
+        Umbral: {{ recorrido["umbral"] }}<br/>
+        </p>
+        {% for f in msel.fotos %}
+        {% set idai=f.getIdAi() %}
+        {% if idai!=idaiant %}
+            <h3>Área de interés Nº {{ idai }}</h3>
+            {% set idaiant=idai %}
+        {% endif %}
+        <a href="/grande/{{ f.getRuta() }}" target="_blank" ><img src="/imgchica/{{ f.getRuta() }}" alt="{{ f.getRuta() }}" /></a>
+        <br/>
+        {% if f.getScore()==-1 %}
+            No fue calificada la foto aún
+        {% else %}
+            Score: {{ f.getScore() }}
+            <br/>
+            Regiones: {{ f.getRegiones() }}
+        {% endif %}
+        <br/>
+        {% endfor %}
+    {% endif %}
+
+</body>
+</html>

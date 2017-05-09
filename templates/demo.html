@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script src="/static/scripts/jquery.min.js"></script>
+<script>
+    // Running in electron
+    try {
+        $ = jQuery = module.exports;
+        // If you want module.exports to be empty, uncomment:
+        // module.exports = {};
+    } catch(e) {}
+</script>
+<style>
+	* {
+		color: black;
+		font-size:17px;
+	}
+</style>
+<script>
+	window.top.postMessage('gcs', '*');
+</script>
+<title>Torre Acces Point</title>
+</head>
+
+<body class="disabled">
+    <div id="header">
+
+      	<!--<h2>Coordenadas</h2>
+	<table>
+		<tr>
+			<td>
+			      x: <input type="text" name="x" id="x" value="" size="6" />
+				<br/>
+			      y: <input type="text" name="y" id="y" value="" size="6" />
+				<br/>
+			      h: <input type="text" name="h" id="h" value="" size="6" />
+			      <br/>
+			</td>
+			<td>
+			      <button id="header-ver-coordenada">Traer coord. actual </button>
+			      </br>
+			      <button id="header-ver-distancia">Calcular distancia actual</button>
+			      </br>
+			      <button id="header-add-coordenada">Guardar coordenada</button>
+				<br/>
+			      <button id="header-ver-coordenadas">Ver coord. guardadas</button>
+			      <br/>
+			      <button id="header-del-mision">Borrar todas las coord.</button>
+			</td>
+		</tr>
+	</table>-->
+
+      	<h2>Manejo de la Mission</h2>
+	<table>
+		<tr>
+			<td>
+      				vel (m/s): <input type="text" name="vel" id="vel" value="" size="3" />
+				<br/>
+				altini(m): <input type="text" name="alt" id="alt" value="" size="3" />
+				<br/>
+      				<!--metros: <input type="text" name="met" id="met" value="" size="3" />-->
+			</td>
+			<td>
+				<button id="header-flotar">Despegar/Aterrizar</button>
+      				<br/>
+				<button id="header-mover">Mover</button>
+      				<br/>
+				<!--<button id="header-figura">Generar figura</button>
+      				<br/>
+				<button id="header-avanzar">Avanzar metros</button>
+      				<br/>
+				<button id="header-ini-mision">Misión completa</button>-->
+			</td>
+		</tr>
+
+	</table>
+
+	<h2>Estado/manejo basico</h2>
+	<table>
+		<tr>
+			<td>
+				Cadena: <input type="text" name="cadena" id="cadena" size="10" value="/dev/ttyAMA0,57600 o udp:127.0.0.1:14550" />
+				<br/>
+				Simulador: <input type="checkbox" name="simular" id="simular" value="1" />
+
+
+				{% if branding %}
+				<h1>Torre</h1>
+				{% endif %}
+				<!--<button id="header-center">Center Map</button>-->
+				<p id="header-state"><b>Armed:</b> ???<br><b>Mode:</b> ??? <br><b>Altitude:</b> ???</p>
+			</td>
+			<td>
+				<button id="header-conectar">Conectar</button>
+				</br>
+				<button id="header-desconectar">Desconectar</button>
+				</br>
+				<button id="header-arm">Armar/Desarmar</button>
+				</br>
+				<button id="header-mode-loiter">Loiter</button>
+				</br>      
+				<button id="header-mode-stabilize">Stabilize</button>
+				</br>      
+				<button id="header-mode-land">Land</button>
+				<br/>
+				<button id="header-fin-mision">RTL</button>
+				</br/>
+
+			</td>
+		</tr>
+	</table>
+
+      </br>
+
+      <!--</br>
+      <button id="header-salir">Salir</button>-->
+
+    </div>
+    <script type="text/javascript" src="/static/scripts/realtime.js"></script>
+  </body>
+</html>

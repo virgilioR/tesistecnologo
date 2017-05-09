@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado fotos</title>
+    <style type="text/css">
+        #misiones{
+            width:5000px;
+            //border:1px solid #000;
+        }
+        #misiones td{
+            border:1px solid #000;
+            text-align:center;
+        }
+        .mostrarfotos{
+            width:2000px;
+        }
+        .fotoycalif{
+            float:left;
+            width:200px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Misiones</h1>
+    <form name="formmision" action="listadomisiones" method="post">
+    Elegir tipo de recorrido {{tipo}}: <SELECT name="tipo" id="tipo">
+    <OPTION value="0" {% if 0==tipo %} selected="selected" {% endif %}>Estacas</OPTION>
+    <OPTION value="1" {% if 1==tipo %} selected="selected" {% endif %}>Mapping</OPTION>
+    </SELECT>
+    <br/>
+
+    Elegir las 2 misiones:
+    <select name="mision1" id="mision1">
+    {% for m in misiones %}
+        <option value="{{ m.getId() }}" {% if msel1 != None and m.getId()==msel1 %} selected="selected" {% endif %} >Misión {{ m.getId() }}</option>
+    {% else %}
+        <em>No hay ninguna misión para mostrar</em>
+    {% endfor %}
+    </select>
+
+    <select name="mision2" id="mision2">
+    {% for m in misiones %}
+        <option value="{{ m.getId() }}" {% if msel2 != None and m.getId()==msel2 %} selected="selected" {% endif %} >Misión {{ m.getId() }}</option>
+    {% else %}
+        <em>No hay ninguna misión para mostrar</em>
+    {% endfor %}
+    </select>
+    <br/>
+
+    Rango de colores: <input type="text" name="rangoc" id="rangoc" value="(50,100);(80,160);(130,255)"/>
+
+        <!--EL ULTIMO rgb (50,100);(85,160);(150,255) -->
+        <!--NGB [(50,85), (60,125), (105,175)] -->
+    <br/>
+
+    Area mínima: <input type="text" name="amin" id="amin" value="{{amin}}" size="4" maxlength="4"/>
+    <br/>
+
+    Redimension: <input type="text" name="resize" id="resize" value="{{resize}}" size="4" maxlength="4"/>
+    <br/>
+
+
+    Cantidad de áreas de interés a mostrar: <input type="text" name="cantai" id="cantai" value="{{cantai}}" size="4" maxlength="4"/>
+    <br/>
+
+    <input type="submit" name="enviar" value="Buscar"/>
+    <input type="submit" name="calif" value="Calificar"/>
+    </form>
+
+    <br/>
+    <table id="misiones" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>Mision</td>
+            <td>Tipo</td>
+            <td>Altura</td>
+            <td>Velocidad</td>
+            <td>Padron</td>
+            <td>UmbralMis</td>
+            <td>Demora</td>
+            <td>Resolucion</td>
+            <td>Cuenta</td>
+            <td>UmbralRec</td>
+            <td>Tiempo</td>
+            <td>Distancia</td>
+            <td>Bateria</td>
+            <td>N Fotos</td>
+            <td>Tot. Est.</td>
+            <td>Prom. Sco.</td>
+            <td>Prom. Alt.(cm)</td>
+            {% for i in range(cantai) %}
+            <td colspan="3">Estaca {{i}}</td>
+            {% endfor %}
+            <td class="mostrarfotos">Fotos</td>
+        </tr>
+    {% for m in dataMisiones %}
+        <tr>
+            <td rowspan="3">{{ m["idm"]}}</td>
+            <td rowspan="3">{% if m["recorrido"]["tipo"]==0 %}
+                    Estacas
+            {% else %}
+                    Mapping
+            {% endif %}</td>
+            <td rowspan="3">{{ m["recorrido"]["vel"] }}</td>
+            <td rowspan="3">{{ m["recorrido"]["alt"] }}</td>
+            <td rowspan="3">{{ m["recorrido"]["padron"] }}</td>
+            <td rowspan="3">{{ m["umbral"] }}</td>
+            <td rowspan="3">{{ m["demora"] }}</td>
+            <td rowspan="3">{{ m["resolucion"] }}</td>
+            <td rowspan="3">{{ m["recorrido"]["calculodist"] }}</td>
+            <td rowspan="3">{{ m["recorrido"]["umbral"] }}</td>
+            <td rowspan="3">{{ m["tiempo"] }}</td>
+            <td rowspan="3">{{ m["disttotal"] }}</td>
+            <td rowspan="3">{{ m["bateria"] }}</td>
+            <td rowspan="3">{{ m["cantFotos"] }}</td>
+            {% if m["promScoreTot"]<0 %}
+                <td rowspan="3" colspan="2" >No cal.</td>
+            {% else %}
+                <td rowspan="3">{{ m["cantRegionesTot"] }}</td>
+                <td rowspan="3">{{ m["promScoreTot"] }}</td>
+            {% endif %}
+
+            <td rowspan="3">{{ m["promAlturas"] }}</td>
+
+            <!--Los totales de todo-->
+            {% for i in range(m["cantAi"]) %}
+                {% if m["promScoreAi"][i]<0 %}
+                    <td colspan="{{ m['recorrido']['cantpuntos'] }}" > </td>
+                {% else %}
+                    <td colspan="{{ m['recorrido']['cantpuntos']/2 }}">{{ m["alturasAi"][i] }}</td>
+                    <td colspan="{{ m['recorrido']['cantpuntos']/2 + 1  }}">{{ m["promScoreAi"][i] }}</td>
+                {% endif %}
+
+            {% endfor %}
+            {% for i in range(cantai-m["cantAi"]) %}
+                <td rowspan="3" colspan="{{ m['recorrido']['cantpuntos'] }}" ></td>
+            {% endfor %}
+
+            <td rowspan="3">
+                {% for f in m["fotos"] %}
+                <div class="fotoycalif">
+                     <a href="/grande/{{ f['ruta'] }}" target="_blank" ><img src="/imgchica/{{ f['ruta'] }}" alt="{{ f['ruta'] }}" /></a>
+                </div>
+                {% endfor %}
+            </td>
+        </tr>
+
+        <!-- ACA SE podria mejorar la visualizacion de la cantidad de fotos en funcion de las areas de interes -->
+
+        <tr>
+        {% for f in m["fotos"] %}
+            {% if f["score"]!=-1 %}
+                <td>{{ f["altoPasto"] }}</td>
+            {% endif %}
+        {% endfor %}
+        </tr>
+        <tr>
+        {% for f in m["fotos"] %}
+            {% if f["score"]==-1 %}
+                <td rowspan="2" >No cal.</td>
+            {% else %}
+                <td>{{ f["score"] }}</td>
+            {% endif %}
+        {% endfor %}
+        </tr>
+    {% endfor %}
+    </table>
+</body>
+</html>

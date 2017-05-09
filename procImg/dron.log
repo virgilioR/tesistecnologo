@@ -1,0 +1,21 @@
+INFO:root:CURRENT SETTINGS
+INFO:root:Current folder: fotos_dron
+INFO:root:Results folder: results
+INFO:root:Debug mode: 2
+INFO:root:Supported formats: ('jpg', 'png')
+INFO:root:Resize (%): 50.0
+INFO:root:Exclusion margin (%): 3
+INFO:root:Minimal area size (px): 8
+INFO:root:Binary results path: fotos_dron/results/*_binary.jpg
+INFO:root:---------------------------------
+INFO:root:Started at: 2016-11-06 06:46:28.843441
+INFO:root:---------------------------------
+INFO:root: File name: 82-52-127-219-2016-11-05.jpg
+INFO:root:    Width (px): 650
+INFO:root:    Height (px): 487
+INFO:root:    Regions detected: 6
+INFO:root:    Regions areas (px): [46.0, 13.0, 12.0, 11.0, 9.0, 8.0]
+INFO:root:    SCORE (0 to 1.0): 0.67
+INFO:root:---------------------------------
+INFO:root:Finished at: 2016-11-06 06:46:30.850889
+INFO:root:Total time: 0:00:02.007448

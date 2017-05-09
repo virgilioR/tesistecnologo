@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <script src="/static/scripts/jquery.min.js"></script>
+<script>
+    // Running in electron
+    try {
+        $ = jQuery = module.exports;
+        // If you want module.exports to be empty, uncomment:
+        // module.exports = {};
+    } catch(e) {}
+</script>
+
+<style>
+* {
+	color: black;
+	font-size:17px;
+}
+#header{
+	width:50%;
+	float:left;
+}
+#muestra{
+	width:50%;
+	float:right;
+}
+#opcionesabsolutas{
+	display:none;
+}
+
+/*body.disabled {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  filter: contrast(30%);
+  -webkit-filter: contrast(30%);
+}*/
+</style>
+
+    <script>
+window.top.postMessage('gcs', '*');
+    </script>
+
+    <!--<script src="/static/scripts/ol.js" type="text/javascript"></script>-->
+    <title>Torre Acces Point</title>
+  </head>
+  <body >
+    <div id="menu">
+	<ul>
+		<li><a href="/gestionmision">Gestionar Misión</a></li>
+		<li><a href="/">Misión Actual</a></li>
+		<li><a href="/listadofotos">Listado fotos</a></li>
+	</ul>
+    </div>
+    <div id="header">
+	<h2>Crear nuevo recorrido</h2>
+	<table>
+		<tr>
+			<td>
+			      Nº padrón: <input type="text" name="padron" id="padron" value="" size="6" />
+			      <br/>
+			      Altura incial(m): <input type="text" name="alt" id="alt" value="" size="3" />
+			      <br/>
+			      Velocidad (m/s): <input type="text" name="vel" id="vel" value="" size="3" />
+			      <br/>
+
+				  Fotos x estaca: <SELECT name="cantpuntos" id="cantpuntos">
+					<OPTION value="3" selected="selected">3</OPTION>
+					<OPTION value="4">4</OPTION>
+					<OPTION value="5">5</OPTION>
+			      </SELECT>
+			      <br/>
+
+				  Cuenta/Distancia?:
+				  <select id="dist">
+					  <option value="0" selected="selected" >Cuenta</option>
+					  <option value="0.5"  >0.5</option>
+					  <option value="1.0" >1</option>
+					  <option value="1.5" >1.5</option>
+				  </select>
+			      <br/>
+
+				  Elegir umbral:
+				  <select id="umbral">
+					  <option value="0" selected="selected" >Sin umbral</option>
+					  <option value="0.5"  >0.5</option>
+					  <option value="1.0" >1</option>
+					  <option value="1.5" >1.5</option>
+				  </select>
+			      <br/>
+
+				  Solapamiento(0..1): <input type="text" name="solapamiento" id="solapamiento" value="0" size="3" />
+			      <br/>
+
+			      Tipo de recorrido: <SELECT name="tipo" id="tipo">
+					<OPTION value="0">Estacas</OPTION>
+					<OPTION value="1">Mapping</OPTION>
+			      </SELECT>
+				  <br/>
+				  Coord. Relativas?: <input type="checkbox" name="relativas" id="relativas" checked="checked" />
+
+			      <br/>
+			</td>
+			<td>
+			      &nbsp;
+			</td>
+		</tr>
+	</table>
+
+    <h2>Coordenadas</h2>
+	<table>
+		<tr>
+			<td>
+			      x: <input type="text" name="x" id="x" value="" size="6" />
+				<br/>
+			      y: <input type="text" name="y" id="y" value="" size="6" />
+				<br/>
+			      h: <input type="text" name="h" id="h" value="" size="6" />
+			      <br/>
+			      tipo:
+				<SELECT name="tipop" id="tipop">
+					<OPTION value="0">Estaca</OPTION>
+					<OPTION value="1">Común</OPTION>
+			      </SELECT><br/>
+				<div id="opcionesabsolutas">
+					<!-- Primero?: <input type="checkbox" name="primerestaca" id="primerestaca" checked="checked" /><br/>-->
+					<div id="posrelativa">
+						Relativas 1er punto: <br/>
+						x rel: <input type="text" name="xrel" id="xrel" value="" size="6" />
+						<br/>
+						y rel: <input type="text" name="yrel" id="yrel" value="" size="6" />
+						<br/>
+					</div>
+				</div>
+			</td>
+			<td>
+			      <!--<button id="header-ver-coordenada">Traer coord. actual </button>
+			      </br>-->
+			      <button id="header-add-coordenada">Agregar coordenada</button>
+				<br/>
+			      <!--<button id="header-ver-coordenadas">Ver coord. guardadas</button>
+			      <br/>-->
+			      <button id="header-del-mision">Borrar todas las coord.</button>
+			</td>
+		</tr>
+	</table>
+
+    <h2>Puntos a recorrer</h2>
+	<table border="1" id="puntosrec">
+		<tr>
+			<td>x</td><td>y</td><td>h</td><td>tipo</td>
+		</tr>
+	</table>
+	
+      <br/>
+      <button id="guardar-recorrido">Guardar Recorrido</button>
+      </br>
+
+      <!--</br>
+      <button id="header-salir">Salir</button>-->
+
+    </div>
+
+    <script type="text/javascript" src="/static/scripts/realtime.js"></script>
+  </body>
+</html>
