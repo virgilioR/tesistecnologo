@@ -666,13 +666,14 @@ $('#header-conectar-desconectar').on('click', function () {
 	$('#header-conectar-desconectar').addClass('pure-button-disabled');
 	$('#iconocargando').show();
 	$('#conect-desc-span').hide();
+	console.log($("#cadena").val())
 	$.ajax({
 	    method: 'PUT',
 	    url: '/api/conectar',
 	    contentType : 'application/json',
-	    data: JSON.stringify({ cadena: 'tcp:192.168.1.45:5760', sim:sim }),
+	    //data: JSON.stringify({ cadena: 'tcp:192.168.1.45:5760', sim:sim }),
 	    //data: JSON.stringify({ cadena: 'udp:127.0.0.1:14550' })
-	    //data: JSON.stringify({ cadena: $("#cadena").val(), sim:sim })
+	    data: JSON.stringify({ cadena: $("#cadena").val(), sim:sim })
 	})
 	    .done(function( msg ) {
 		if (msg.ok) {
