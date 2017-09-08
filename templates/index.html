@@ -1,239 +1,287 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <script src="/static/scripts/jquery.min.js"></script>
-<script>
-    // Running in electron
-    try {
-        $ = jQuery = module.exports;
-        // If you want module.exports to be empty, uncomment:
-        // module.exports = {};
-    } catch(e) {}
-</script>
+<!DOCTYPE html>
+<html>
+<head>
+<?xml version="1.0" encoding="utf-8"?>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example with a side menu that hides on mobile, just like the Pure website.">
+    <title>Misión actual</title>
+    
+    <link rel="stylesheet" type="text/css" href="static/style/pure-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/grids-responsive.css">
+    <link rel="stylesheet" type="text/css" href="static/style/remodal.css">
+    <link rel="stylesheet" type="text/css" href="static/style/remodal-default-theme.css">
+    <link rel="stylesheet" type="text/css" href="static/style/norm-div-modal.css">
+    <link rel="stylesheet" type="text/css" href="static/style/menus-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/acordeon.css">
+    <link rel="stylesheet" type="text/css" href="static/style/buttons-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/buttons-core-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/uilspin.css">
+    <link rel="stylesheet" type="text/css" href="static/style/noty.css">
+    <link rel="stylesheet" type="text/css" href="static/style/side-menu.css">
+    <link rel="stylesheet" type="text/css" href="static/style/modalestadodron.css">
+    <link rel="stylesheet" type="text/css" href="static/style/normalize.css">
+    <link rel="stylesheet" type="text/css" href="static/style/listadomisiones.css">
+    <link rel="icon" type="image/png" href="/static/images/drone.png" />  
+    
+</head>
+<body>
+<div id="layout">
+    <!-- Menu toggle -->
+    <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+    </a>
 
-<!--    <link rel="stylesheet" href="/static/scripts/ol.css" type="text/css">-->
-    <style>
-
-* {
-	color: black;
-	font-size:17px;
-}
-
-#header{
-	width:50%;
-	float:left;
-}
-
-#muestra{
-	width:50%;
-	float:right;
-}
-
-/*#header { 
-  position: absolute;
-  left: 20px;
-  color: white;
-  z-index: 100;
-  font-family: Sans;
-  margin-top: 20px;*/
-}
-/*html, body, .map {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-}
-.ol-zoom {
-  right: 20px !important;
-  left: initial;
-}*/
-
-body.disabled {
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
-  filter: contrast(30%);
-  -webkit-filter: contrast(30%);
-}
-    </style>
-
-    <script>
-window.top.postMessage('gcs', '*');
-    </script>
-
-    <!--<script src="/static/scripts/ol.js" type="text/javascript"></script>-->
-    <title>Torre Acces Point</title>
-  </head>
-  <body class="disabled">
     <div id="menu">
-	<ul>
-		<li><a href="/gestionmision">Gestionar Misión</a></li>
-		<li><a href="/">Misión Actual</a></li>
-		<li><a href="/listadomisiones">Listado de Misiones</a></li>
-		<li><a href="/listadofotos">Listado Fotos</a></li>
-	</ul>
-    </div>
-    <div id="header">
-
-      	<!--<h2>Coordenadas</h2>
-	<table>
-		<tr>
-			<td>
-			      x: <input type="text" name="x" id="x" value="" size="6" />
-				<br/>
-			      y: <input type="text" name="y" id="y" value="" size="6" />
-				<br/>
-			      h: <input type="text" name="h" id="h" value="" size="6" />
-			      <br/>
-			</td>
-			<td>
-			      <button id="header-ver-coordenada">Traer coord. actual </button>
-			      </br>
-			      <!--<button id="header-ver-distancia">Calcular distancia actual</button>
-			      </br>-->
-			      <!--<button id="header-add-coordenada">Guardar coordenada</button>
-				<br/>
-			      <button id="header-ver-coordenadas">Ver coord. guardadas</button>
-			      <br/>
-			      <button id="header-del-mision">Borrar todas las coord.</button>
-			</td>
-		</tr>
-	</table>-->
-
-
-	<h2>Configuración de conexión</h2>
-	<table>
-		<tr>
-			<td>
-				Fecha actual: <input type="text" name="fecha" id="fecha" size="10" value="" />
-				<br/>
-				Cadena: <input type="text" name="cadena" id="cadena" size="10" value="{{ cadenaconexion }}" />
-				<br/>
-				Simulador: <input type="checkbox" name="simular" id="simular" value="1" />
-
-			</td>
-			<td>
-				<button id="header-fecha">Cambiar Fecha</button>
-				</br>
-				<button id="header-conectar">Conectar</button>
-				</br>
-				<button id="header-desconectar">Desconectar</button>
-				</br>
-			</td>
-		</tr>
-	</table>
-    </br>
-
-    <h2>Control de misión</h2>
-	<table>
-		<tr>
-			<td>
-				Selección del recorrido: 
-				<select id="selrec">
-					<option value="0" >Ningún recorrido</option>
-				</select>
-				<br/>
-				Nº padrón: <input type="text" name="padron" id="padron" value="" size="6" />
-				<br/>
-				Elegir umbral: <input type="text" name="umbral" id="umbral" value="" size="6" />
-
-				<!--<select id="umbral">
-					<option value="0.5" selected="selected" >0.5</option>
-					<option value="1.0" >1</option>
-					<option value="1.5" >1.5</option>
-				</select>-->
-				<br/>
-				En movimiento?:
-				<select id="movfotos">
-					<option value="0" selected="selected" >No</option>
-					<option value="1" >Si</option>
-				</select>
-				<br/>
-
-				Altitud:
-				<select id="altitud">
-					<option value="0" >Relativa</option>
-					<option value="1" selected="selected">Global</option>
-				</select>
-				<br/>
-
-				Elegir resolucion:
-				<select id="resolucion">
-					<option value="0" selected="selected" >1300 x 975</option>
-					<option value="1" >2592 x 1944</option>
-					<option value="2" >3280 x 2464</option>
-				</select>
-				<br/>
-
-				Demora foto(s): <input type="text" name="demora" id="demora" value="-1" size="3" />
-				<br/>
-
-				Altura incial(m): <input type="text" name="alt" id="alt" value="" size="3" />
-				<br/>
-				Velocidad (m/s): <input type="text" name="vel" id="vel" value="" size="3" />
-				<br/>
-				Tipo: <input type="text" name="tipo" id="tipo" value="" size="10" />
-				<br/>
-				Cuenta/Dist: <input type="text" name="calculodist" id="calculodist" value="" size="6" />
-				<br/>
-				Cant. puntos: <input type="text" name="cantpuntos" id="cantpuntos" value="" size="3" />
-				<br/>
-			
-			</td>
-			<td>
-				<button id="header-arm">Armar/Desarmar</button>
-				</br>     		
-				<button id="header-una-foto">Sacar foto</button>
-				</br>
-				<button id="header-despegar">Despegar/Aterrizar</button>
-      				<br/>
-				<!--<button id="header-figura">Generar figura</button>
-      				<br/>-->
-				<!--<button id="header-avanzar">Avanzar metros</button>
-      				<br/>-->
-				<button id="header-ini-mision">Correr Misión</button>
-				</br>
-				<button id="header-mode-land">Land</button>
-				<br/>
-				<button id="header-fin-mision">RTL</button>
-				</br/>	
-			</td>
-		</tr>
-	</table>
-
-   	<h2>Puntos a recorrer</h2>
-
-	<table border="1" id="puntosrec">
-		<tr>
-			<td>id</td><td>x</td><td>y</td><td>h</td><td>tipo</td>
-		</tr>
-	</table>
-
-
-      <!--</br>
-      <button id="header-salir">Salir</button>-->
-
-    </div>
-    <!--<div id="map" class="map"></div>-->
-    <div id="muestra">
-	<h1>Estado del dron</h1>
-	<!--<button id="header-center">Center Map</button>-->
-	<p id="header-state"><b>Armado:</b> ???<br><b>Modo:</b> ??? <br><b>Altura:</b> ???</p>
-	Núm satélites:<span id="satelites"></span><br/>
-	Batería:<span id="bateria"></span><br/>
-        <h1>Estado de la misión</h1>
-	Id:<span id="idm"></span><br/>
-	Tipo:<span id="tipom"></span><br/>
-	<br/>
-	<h2>Última foto</h2>
-	Foto Id:<span id="idf"></span><br/>
-	Coordenadas:<span id="coordf"></span><br/>
-	<span id="foto" ></span><br/>
-	<br/>
-	<h2>Siguiente punto</h2>
-	Distancia Inicial:<span id="distini"></span><br/>
-	Distancia Actual:<span id="distact"></span>
+      <div class="pure-menu custom-restricted-width">
+        <a class="pure-menu-heading" href="/">Inicio</a>
+        <ul class="pure-menu-list">
+	  <li class="pure-menu-item"><a href="/administracion" class="pure-menu-link"><br>Administración</a>
+	    <ul></ul>
+	  </li>
+          <li class="pure-menu-item"><a href="/gestionmision" class="pure-menu-link"><br>Gestionar recorrido</a>
+            <ul></ul>
+          </li>
+          <li class="pure-menu-item"><a href="/" class="pure-menu-link"><br>Misión actual</a>
+            <ul></ul>
+	  </li>
+          <li class="pure-menu-item"><a href="/listadomisiones" class="pure-menu-link"><br>Listado de misiones</a>
+            <ul></ul>
+          </li>
+          <li class="pure-menu-item"><a href="/listadofotos" class="pure-menu-link"><br>Listado de fotos</a>
+            <ul></ul>
+          </li>
+        </ul>
+      </div>
     </div>
 
-    <script type="text/javascript" src="/static/scripts/realtime.js"></script>
-  </body>
+    <div id="main" class="norm-main-index">
+      	<!-- Empieza ventana modal -->
+      	<div class="remodal" data-remodal-id="modal" style="z-index: 99999;">
+		<label data-remodal-action="close" class="close-modal-status">X</label>
+      	<div class="pure-g">
+	      	<div class="pure-u-1 pure-u-lg-11-24 pure-u-md-11-24 pure-u-sm-1" style="margin-right:25px;">
+	            <div class="l-box">
+			      	<table class="primerTabla pure-table pure-table-horizontal tablaEstadoDron widgetMisiones">
+				      	<tbody>
+				      	<tr>
+							<th class="thEstado" align="center" colspan="2" style="padding: 0;">Estado del drone</th>
+				        </tr>
+				            <tr>
+				                <td><b>Armado:</b></td>
+				                <td><span id="e-d-armado">???</span></td>
+				            </tr>
+				            <tr>
+				                <td><b>Modo:</b></td>
+				                <td><span id="e-d-modo">???</span></td>
+				            </tr>
+				            <tr>
+				                <td><b>Altura:</b></td>
+				                <td><span id="e-d-altura">???</span></td>
+				            </tr>
+				            <tr>
+			                    <td><b>Num. Satélites:<b></td>
+			                    <td><span id="satelites">???</span></td>
+			                </tr>
+			                <tr>
+			                    <td><b>Batería:<b></td>
+			                    <td><span id="bateria">???</span></td>
+			                </tr>
+						</tbody>
+			        </table>  
+			    </div>
+		    </div>
+
+		    <div class="pure-u-1 pure-u-lg-11-24 pure-u-md-11-24 pure-u-sm-1">
+	            <div class="l-box">
+	            	<table class="pure-table tablaEstadoDron widgetMisiones">
+			            <tbody>
+				        <tr class="thEstado">
+			                <th align="center" colspan="2" style="padding: 0;">Estado de la misión</th>
+						</tr>
+						  <tr>
+			                    <td>ID:</td>
+					            <td><span id="idm">???</span></td>
+						  </tr>
+						  <tr>
+	                            <td>Tipo:</td>
+	                            <td><span id="tipom">???</span></td>
+						  </tr>
+
+				      	<tr class="thEstado">
+							<th align="center" colspan="2" style="padding: 0;">Última foto</th>
+				      	</tr>
+						  	<tr>
+				                <td>ID foto:</td>
+				                <td><span id="idf">???</span></td>
+					  		</tr>
+						  	<tr>
+			                    <td>Coordenadas:</td>
+			                    <td><span id="coordf">???</span></td>
+						  	</tr>
+
+				      	<tr class="thEstado">
+							<th align="center" colspan="2" style="padding: 0;">Siguiente punto</th>
+				      	</tr>
+						  	<tr>
+			                    <td>Distancia inicial:</td>
+			                    <td><span id="distini">???</span></td>
+						  	</tr>
+						  	<tr>
+			                    <td>Distancia actual:</td>
+			                    <td><span id="distact">???</span></td>
+						  	</tr>
+						</tbody>
+			        </table>
+				</div>
+			</div>
+		</div>
+
+		</div>
+        <!-- Termina ventana modal -->
+        <div class="content">
+          <div class="pure-g">
+	    <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4 norm-title-1">
+              <div class="l-box">
+		<br>
+		<h1>Misión actual</h1>
+		 <div class="hiddencon">
+		   <div class="hiddencon-label"><br><img src="static/images/antena.png" height="20" width="20" style="color: white;">
+		     <br>
+		     <br>
+		   </div>
+		   <button data-remodal-target="modal" title="Estado del dron" class="button-small pure-button dron-status"><img src="static/images/antena.png" height="40" width="40"><br><a class="a-dron-status">Estado del drone</a></button>
+		 </div>
+	      </div>
+	    </div>
+                <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4 norm-pure-first">
+                  <div class="l-box">
+                    <br>
+		    <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4 norm-pure-insider-1 green-border">
+		      <h3>Enlazar Drone</h3>
+		      <p>Antes de conectar, asegúrese de que el drone esté debidamente conectado a la Raspberry PI. También asegúrese de estar a una distancia considerable del drone para evitar cualquier incidente con el mismo.<!-- En caso de querer probar la aplicacion con un simulador, tildar la casilla de "Simulador".--></p>
+		      <br>
+		      <button id="header-conectar-desconectar" class="onyoff button-success pure-button"><div id="iconocargando" class="iconocargando"><svg width='28px' height='28px' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="uil-spin"><rect x="0" y="0" width="100" height="100" fill="none" class="bk"></rect><g transform="translate(50 50)"><g transform="rotate(0) translate(34 0)"><circle cx="0" cy="0" r=6 fill="#000"><animate attributeName="opacity" from="1" to="0.1" begin="-0.87s" dur="1s" repeatCount="indefinite"></animate><animateTransform attributeName="transform" type="scale" from="1.5" to="1" begin="-0.87s" dur="1s" repeatCount="indefinite"></animateTransform></circle></g><g transform="rotate(45) translate(34 0)"><circle cx="0" cy="0" r=6 fill="#000"><animate attributeName="opacity" from="1" to="0.1" begin="-0.75s" dur="1s" repeatCount="indefinite"></animate><animateTransform attributeName="transform" type="scale" from="1.5" to="1" begin="-0.75s" dur="1s" repeatCount="indefinite"></animateTransform></circle></g><g transform="rotate(90) translate(34 0)"><circle cx="0" cy="0" r=6 fill="#000"><animate attributeName="opacity" from="1" to="0.1" begin="-0.62s" dur="1s" repeatCount="indefinite"></animate><animateTransform attributeName="transform" type="scale" from="1.5" to="1" begin="-0.62s" dur="1s" repeatCount="indefinite"></animateTransform></circle></g><g transform="rotate(135) translate(34 0)"><circle cx="0" cy="0" r=6 fill="#000"><animate attributeName="opacity" from="1" to="0.1" begin="-0.5s" dur="1s" repeatCount="indefinite"></animate><animateTransform attributeName="transform" type="scale" from="1.5" to="1" begin="-0.5s" dur="1s" repeatCount="indefinite"></animateTransform></circle></g><g transform="rotate(180) translate(34 0)"><circle cx="0" cy="0" r=6 fill="#000"><animate attributeName="opacity" from="1" to="0.1" begin="-0.37s" dur="1s" repeatCount="indefinite"></animate><animateTransform attributeName="transform" type="scale" from="1.5" to="1" begin="-0.37s" dur="1s" repeatCount="indefinite"></animateTransform></circle></g><g transform="rotate(225) translate(34 0)"><circle cx="0" cy="0" r=6 fill="#000"><animate attributeName="opacity" from="1" to="0.1" begin="-0.25s" dur="1s" repeatCount="indefinite"></animate><animateTransform attributeName="transform" type="scale" from="1.5" to="1" begin="-0.25s" dur="1s" repeatCount="indefinite"></animateTransform></circle></g><g transform="rotate(270) translate(34 0)"><circle cx="0" cy="0" r=6 fill="#000"><animate attributeName="opacity" from="1" to="0.1" begin="-0.12s" dur="1s" repeatCount="indefinite"></animate><animateTransform attributeName="transform" type="scale" from="1.5" to="1" begin="-0.12s" dur="1s" repeatCount="indefinite"></animateTransform></circle></g><g transform="rotate(315) translate(34 0)"><circle cx="0" cy="0" r=6 fill="#000"><animate attributeName="opacity" from="1" to="0.1" begin="-0s" dur="1s" repeatCount="indefinite"></animate><animateTransform attributeName="transform" type="scale" from="1.5" to="1" begin="-0s" dur="1s" repeatCount="indefinite"></animateTransform></circle></g></g></svg></div><a id="conect-desc-span">Conectar</a></button><br>
+		      <p style="margin-bottom: 0px;">Simulador </p>
+		      <input type="checkbox" name="simular" id="simular" value="1"><br><br>
+		    </div>
+		    
+		    <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4 norm-pure-insider-1 skyblue-border">
+		      <h3>Control de misión</h3>
+		      <h4>Configuraciones</h4>
+		      <table style = "width: 70%;" class="pure-table pure-table-horizontal center-table-s">
+			<tbody>
+			  <tr>
+			    <td>Recorrido:</td>
+			    <td><select data-original="" id="selrec"><option value="0">Ningún recorrido</option></select></td>
+			  </tr>
+			  <tr>
+			    <td>Nº Padrón:</td>
+			    <td><input class='aControlar' data-original="" type="text" name="padron" readonly="readonly" id="padron" size="10" value=""></td>
+			  </tr>
+			  <tr>
+			    <td>Elegir umbral:</td>
+			    <td><input class='aControlar' data-original="" type="text" name="umbral" id="umbral" size="10" value=""></td>
+			  </tr>
+			  <tr>
+			    <td>En movimiento?:</td>
+			    <td><select class='aControlar' data-original="" id="movfotos"><option value="0" selected="selected">No</option><option value="1">Si</option></select></td>
+			  </tr>
+			  <tr>
+			    <td>Altitud:</td>
+			    <td><select readonly="readonly" data-original="" id="altitud"><option value="0">Relativa</option><option value="1" selected="selected">Global</option></select></td>
+			  </tr>
+			  <tr>
+			    <td>Resolución:</td>
+			    <td><select  class='aControlar' data-original="" id="resolucion"><option value="0" selected="selected">1300x975</option><option value="1">2592x1944</option><option value="2">3280x2464</option></select></td>
+			  </tr>
+			  <tr>
+			    <td>Demora foto(s):</td>
+			    <td><input  class='aControlar' data-original="-1" type="text" name="demora" id="demora" size="10" value="-1"></td>
+			  </tr>
+			  <tr>
+			    <td>Altura inicial(m):</td>
+			    <td><input readonly="readonly" data-original="" type="text" name="alt" id="alt" size="10" value=""></td>
+			  </tr>
+			  <tr>
+			    <td>Velocidad(m/s):</td>
+			    <td><input class='aControlar' data-original="" type="text" name="vel" id="vel" size="10" value=""></td>
+			  </tr>
+			  <tr>
+			    <td>Tipo:</td>
+			    <td><input data-original="" type="text" name="tipo" readonly="readonly" id="tipo" size="10" value=""></td>
+			  </tr>
+			  <!--tr>
+			    <td>Cuenta/dist:</td>
+			    <td><input class='aControlar' data-original="" name="calculodist" id="calculodist" value="" size="10" type="text"></td>
+			  </tr-->
+			  <tr>
+			    <td>Cant. Puntos:</td>
+			    <td><input data-original="" name="cantpuntos" readonly="readonly" id="cantpuntos" value="" size="10" type="text"></td>
+			  </tr>
+			</tbody>
+		      </table>
+		      <br>
+		      <h3>Puntos a recorrer</h3>
+		      <button class="button-small pure-button" id="btn-show-table" onclick="showhidepuntos()">Mostrar</button><br><br>
+		      <table  class="pure-table pure-table-bordered  hidding-table" id="puntosrec">
+			<tr>
+			  <td>ID</td>
+			  <td>X</td>
+			  <td>Y</td>
+			  <td>H</td>
+			  <td>Tipo</td>
+			</tr>
+		      </table>
+		      <br>
+                    </div>
+
+            <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4 norm-pure-insider-1 skyblue-border">
+		      	<h3>Acciones del drone</h3>
+	      		<div class="pure-g">	                
+	                <div class="pure-u-1-2 pure-u-sm-1-3 pure-u-md-1-3 pure-u-lg-1-3">
+	                  <button style="margin: 10px;width: 100px;" class="button-small pure-button" id="header-mode-land"><img src="static/images/warning.png" height="40" width="40" title="Aterrizaje de emergencia (LAND)"><p style="font-size: 75%;"><br>Land</p></button>
+	                </div>
+	                <div class="pure-u-1-2 pure-u-sm-1-3 pure-u-md-1-3 pure-u-lg-1-3">
+	                  <button style="margin: 10px;width: 100px;" class="button-small pure-button" id="header-ini-mision"><img src="static/images/navigation-1.png" height="40" width="40" title="Correr mision"><p style="font-size: 75%;">Correr<br>misión</p></button>
+	                </div>
+	                <div class="pure-u-1 pure-u-sm-1-3 pure-u-md-1-3 pure-u-lg-1-3">
+	                  <button style="margin: 10px;width: 100px;" class="button-small pure-button" id="header-fin-mision"><img src="static/images/home.png" height="40" width="40" title="Volver a casa (RTL)"><p style="font-size: 75%;"><br>RTL</p></button>
+	                </div>
+              	</div>
+            	</div>
+            </div>
+            </div>
+        </div>
+	</div>
+	<div class="footer">
+        <div class="pure-g">
+            <div class="pure-u-1 norm-footer"><br><br>Tesis de grado 2017</div>
+        </div>
+    </div>
+<script src="static/scripts/jquery.min.js"></script>
+<script>
+  function showhidepuntos(){
+      var tabla = document.getElementById("puntosrec");
+      var buton = document.getElementById("btn-show-table");
+      if (tabla.style.display == ""){
+          tabla.style.display = "none";
+      }
+      if (tabla.style.display == "none"){
+          tabla.style.display = "inline-block";
+          buton.innerHTML = "Ocultar";
+      } else {
+          tabla.style.display = "none";
+          buton.innerHTML = "Mostrar";
+      }
+  }
+</script>
+<script src="static/scripts/noty.js"></script>
+<script src="static/scripts/ui.js"></script>
+<script src="static/scripts/menus.js"></script>
+<script src="static/scripts/remodal.min.js"></script>
+<script src="static/scripts/ourstyle.js"></script>
+<script src="static/scripts/realtime.js"></script>
+</body>
 </html>

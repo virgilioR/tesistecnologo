@@ -33,7 +33,11 @@ class Mision():
             # inicializamos el contador de disttotal
             self.disttotal=0
             self.idm=persistencia.guardarMision(rec.getId(),self.fecha,self.umbral,self.resolucion,self.bateriaini, self.demora, self.movfotos)
-
+    def imprimir(self,texto):
+                print (texto) 
+                with open("/tmp/torreap", "a") as myfile:
+                        myfile.write(str(texto)+ "\n")
+                        
     def terminarMision(self,bateriafin):
         #todo
         self.tiempo=round(time()-self.tiempoini,2)
@@ -47,6 +51,16 @@ class Mision():
 
     def getId(self):
         return self.idm
+
+    def getRecorrido(self):
+        return self.recorrido
+
+    def getFecha(self):
+        return str(self.fecha.day) + "/" + str(self.fecha.month) + "/" + str(self.fecha.year)
+
+    def getFechaCompleta(self):
+        return self.fecha
+
 
     def getTiempoIni(self):
         return self.tiempoini
@@ -131,7 +145,7 @@ class Mision():
         scoreTot=0
         cantRegionesTot=0
         contFotos=0
-
+        self.imprimir("estoy en getDAtaMision")
         #PARA TERMINAR EL DESARROLLOO EN FUNCION DE pcantai deberian limitarse el total de fotos a mostrar
         #AL MOMENTO A PARTIR DE LA LINEA 179 SE LIMITA mostrar solo un total de datos de ai que no sobrepase pero los datos de fotos van por otro lado
         #PERO POR LO MENOS SIRVE PARA QUE AGARREMOS MISIONES TODAS CON L MISMA CANTIDAD DE ESTACAS PARA VER Y QUE NO QUEDE FIJO EL PARAMETRO
@@ -139,6 +153,7 @@ class Mision():
 
         print "ARRANCAMOS A TRAER EL DATA MISION"
         for f in self.fotos:
+            self.imprimir("estoy en una foto")
             dataFoto=f.getDataFoto(alturaestaca,alturafranja)
             dataFotos.append(dataFoto)
             altPasFoto=float(dataFoto["altoPasto"])
@@ -169,7 +184,10 @@ class Mision():
         promScoreAi={}
         alturasTot=0
         for key in scoreAi:
-            promScoreAi[key]=round(scoreAi[key]/fotoxestaca,2)
+            if fotoxestaca == 0:
+                promScoreAi[key] = 0
+            else:
+                promScoreAi[key]=round(scoreAi[key]/fotoxestaca,2)
             #Si alguna region no tiene su valor aun ponerle 0
             #regionesAi[key] = regionesAi.get(key, 0)
             #Lo mismo para las alturas
@@ -183,6 +201,8 @@ class Mision():
         else:
             promScoreTot = round(scoreTot / contFotos, 2)
             promAlturas=round(alturasTot)/len(promScoreAi)
+
+        self.imprimir("estoy en hola")
 
         #Hay que ordenar los diccionarios
         promScoreAiOrd = [valor for (clave, valor) in sorted(promScoreAi.items())]

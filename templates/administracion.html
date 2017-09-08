@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<?xml version="1.0" encoding="utf-8"?>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example with a side menu that hides on mobile, just like the Pure website.">
+    <title>Administración</title>
+    
+    <link rel="stylesheet" type="text/css" href="static/style/pure-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/grids-responsive.css">
+    <link rel="stylesheet" type="text/css" href="static/style/remodal.css">
+    <link rel="stylesheet" type="text/css" href="static/style/remodal-default-theme.css">
+    <link rel="stylesheet" type="text/css" href="static/style/norm-div-modal.css">
+    <link rel="stylesheet" type="text/css" href="static/style/menus-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/acordeon.css">
+    <link rel="stylesheet" type="text/css" href="static/style/buttons-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/buttons-core-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/uilspin.css">
+    <link rel="stylesheet" type="text/css" href="static/style/noty.css">
+    <link rel="stylesheet" type="text/css" href="static/style/side-menu.css">
+    <link rel="stylesheet" type="text/css" href="static/style/modalestadodron.css">
+    <link rel="stylesheet" type="text/css" href="static/style/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="static/style/administracion.css">
+    <link rel="icon" type="image/png" href="/static/images/drone.png" />
+</head>
+<body>
+<div id="layout">
+    <!-- Menu toggle -->
+    <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+    </a>
+
+    <div id="menu">
+      <div class="pure-menu custom-restricted-width">
+        <a class="pure-menu-heading" href="/">Inicio</a>
+        <ul class="pure-menu-list acorh">
+	  <li class="pure-menu-item"><a href="/administracion" class="pure-menu-link"><br>Administración</a>
+	    <ul></ul>
+	  </li>
+          <li class="pure-menu-item"><a href="/gestionmision" class="pure-menu-link"><br>Gestionar recorrido</a>
+            <ul></ul>
+          </li>
+          <li class="pure-menu-item"><a href="/" class="pure-menu-link"><br>Misión actual</a>
+	    <ul></ul>
+          </li>
+          <li class="pure-menu-item"><a href="/listadomisiones" class="pure-menu-link"><br>Listado de misiones</a>
+            <ul></ul>
+          </li>
+          <li class="pure-menu-item"><a href="/listadofotos" class="pure-menu-link"><br>Listado de fotos</a>
+            <ul></ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="main">
+      <div class="content">
+	<div class="remodal" data-remodal-id="modal" data-remodal-options="closeOnEscape: false, closeOnOutsideClick: false">
+            <h3 style="text-align: center;">Borrando fotos...</h3>
+                <div id="progress">
+                    <img style="width:50%" src="/static/images/ajax-loader.gif"/>
+                </div>
+        </div>
+      	<div class="pure-g" style="width: 100%">
+          <div class="pure-u-1 widgetConexion dronDesconectado" id="widgetConexion" >
+            <div class="l-box" style="padding: 5px;">
+              <h2>Estado de Conexión del Drone</h2>
+              <p class="mensajeConectado">El drone se encuentra conectado</p>
+              <p class="mensajeDesconectado">El drone se encuentra desconectado</p>
+            </div>
+          </div>
+          
+      	  <div class="pure-u-1 pure-u-md-7-24 pure-u-lg-7-24 customWidget" style="border: 5px solid rgba(255,164,67,1);">
+      	    <div class="l-box" style="padding: 5px;">
+      	      <h3>Reiniciar servicio web</h3>
+      	      <p>En caso que el servicio web genere problemas, puede presionar el siguiente botón para reiniciar el mismo.</p>
+      	      <br>
+      	      <button class="button-warning pure-button" onclick="restartWeb()">REINICIAR</button>
+      	    </div>
+      	  </div>
+      	  <div class="pure-u-1 pure-u-md-7-24 pure-u-lg-7-24 customWidget" style="border: 5px solid rgba(255,82,67,1);">
+      	    <div class="l-box" style="padding: 5px;">
+      	      <h3>Reiniciar Raspberry</h3>
+      	      <p>En caso de que sea necesario reiniciar la raspberry puede hacerlo con el siguiente botón. Tenga en cuenta que este proceso puede tardar unos minutos.</p>
+      	      <button class="button-error pure-button" onclick="restartRasp()">REINICIAR</button>
+      	    </div>
+      	  </div>
+      	  <div class="pure-u-1 pure-u-md-7-24 pure-u-lg-7-24 customWidget" style="border: 5px solid rgba(255,82,67,1);" >
+      	    <div class="l-box" style="padding: 5px;">
+      	      <h3>Apagar Raspberry</h3>
+      	      <p>Se recomienda una vez finalizado el recorrido y la misión, se apague la raspberry con el siguiente botón. Luego de confirmar, la Raspberry se apagara en 1 minuto.</p>
+      	      <button class="button-error pure-button" onclick="shutingdownRasp()">APAGAR</button>
+      	    </div>
+      	  </div>
+
+
+          <div class="pure-u-1 widgetAcciones">
+            <div class="l-box" style="padding: 5px;">
+              <h2>Acciones de la Raspberry</h2>
+              <div class="pure-g">
+                <div class="pure-u-1 pure-u-sm-1-2 pure-u-md-1-2 pure-u-lg-1-3">
+                  <button class="button-success pure-button btnAcciones" onclick="exportarDB()">Exportar Base de Datos</button>
+                </div>
+                
+                <div class="pure-u-1 pure-u-sm-1-2 pure-u-md-1-2 pure-u-lg-1-3">
+                  <button class="button-error pure-button btnAcciones" onclick="confirmacionlimpiarBD()">Limpiar Base de Datos</button>
+                </div>
+
+                <div class="pure-u-1 pure-u-sm-1 pure-u-md-1 pure-u-lg-1-3">
+                  <button class="button-error pure-button btnAcciones" onclick="confirmacionBorrarFotos()">Borrar Fotos</button>
+                </div>        
+              </div>
+            </div>
+          </div>
+
+          <div class="pure-u-1 widgetAcciones widgetAccionesDron">
+            <div class="l-box" style="padding: 5px;">
+              <h2>Acciones del drone</h2>
+              <div class="pure-g">
+                <div class="pure-u-1-2 pure-u-sm-1-3 pure-u-md-1-5 pure-u-lg-1-5">
+                  <button style="margin: 10px;" class="button-small pure-button botonAccion" id="header-arm"><img src="static/images/settings.png" height="40" width="40" title="Armar/Desarmar"><br><p style="font-size: 75%;">Armar<br>Desarmar</p></button>
+                </div>
+                <div class="pure-u-1-2 pure-u-sm-1-3 pure-u-md-1-5 pure-u-lg-1-5">
+                  <button style="margin: 10px;" class="button-small pure-button botonAccion" id="header-una-foto"><img src="static/images/photo-camera.png" height="40" width="40" title="Sacar foto"><p style="font-size: 75%;">Sacar<br>foto</p></button>
+                </div>
+                <div class="pure-u-1-2 pure-u-sm-1-3 pure-u-md-1-5 pure-u-lg-1-5">
+                  <button style="margin: 10px;" class="button-small pure-button botonAccion" id="header-despegar"><img src="static/images/paper-plane-1.png" height="40" width="40" title="Despegar/Aterrizar"><p style="font-size: 75%;">Despegar<br>Aterrizar</p></button>
+                </div>
+                <div class="pure-u-1-2 pure-u-sm-1-2 pure-u-md-1-5 pure-u-lg-1-5">
+                  <button style="margin: 10px;" class="button-small pure-button botonAccion" id="header-mode-land"><img src="static/images/warning.png" height="40" width="40" title="Aterrizaje de emergencia (LAND)"><p style="font-size: 75%;"><br>Land</p></button>
+                </div>
+                <div class="pure-u-1 pure-u-sm-1-2 pure-u-md-1-5 pure-u-lg-1-5">
+                  <button style="margin: 10px;" class="button-small pure-button botonAccion" id="header-fin-mision"><img src="static/images/home.png" height="40" width="40" title="Volver a casa (RTL)"><p style="font-size: 75%;"><br>RTL</p></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:45px;" class="pure-u-1">
+            <h2 style="text-align: center;">Logs del dispositivo</h2>
+          </div>
+      	  <div class="pure-u-1 widgetConsola" >
+      	    <div class="l-box" style="height:380px">
+      	      <p id="msgconsola" style="color: black;height: 100%;"></p>
+      	    </div>
+      	  </div>
+          <div class="pure-u-1" style="text-align: center;">
+            <button style="margin-top:15px;" class="pure-button button-success" id="btnDescargaLogs" onclick="descargarLogs()">Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
+          </div>
+      	</div>
+	  
+      </div>	  
+    </div>
+    <div class="footer">
+        <div class="pure-g">
+            <div class="pure-u-1" style="height: 80px; background-color:#191818; color:white; text-align: center;"><br><br>Tesis de grado 2017</div>
+        </div>
+    </div>
+</div>
+<script src="static/scripts/jquery.min.js"></script>
+<script src="static/scripts/noty.js"></script>
+<script src="static/scripts/ui.js"></script>
+<script src="static/scripts/menus.js"></script>
+<script src="static/scripts/remodal.min.js"></script>
+<script src="static/scripts/ourstyle.js"></script>
+<script src="static/scripts/ajax.js"></script>
+</body>
+</html>

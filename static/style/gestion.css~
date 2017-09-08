@@ -1,0 +1,87 @@
+.pure-menu-item{
+	margin-bottom: 10px;
+}
+
+.widgetCustom{
+	border: 5px solid rgb(66, 184, 221); 
+	border-radius: 15px; 
+	margin-top: 5px; 
+	/*margin-left: 5px;
+	margin-right: 5px; */
+	text-align: center;
+	height: 100%;
+}
+
+.tablaCustom{
+    width: 100%;
+    border: 0 !important;
+}
+@media only screen and (max-width: 400px) {
+    .esconderTD{
+    	display: none;
+    }
+
+    .spanTD{
+    	display: block;
+    }
+    .divGrandePureG{
+	    margin-left: -10px;	
+    }
+}
+
+@media screen and (min-width: 401px) {
+    .esconderTD{
+    	display: block;
+    }
+
+    .spanTD{
+    	display: none;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px)  {
+    .pure-u-md-11-24{
+		height: 378px;
+	}
+	.liButton{
+		margin-top: 5.5%;
+	}
+
+	#header-add-coordenada{
+		margin-top: 11%;
+	}
+}
+
+
+@media only screen and (min-width: 1024px) and (max-width: 1248px)  {
+    .esconderTD{
+    	display: none;
+    }
+
+    .spanTD{
+    	display: block;
+    }
+}
+
+@media screen and (min-width: 1024px){
+	.pure-u-lg-7-24{
+		margin-left: 2.5%;
+	}
+	.widgetCustom{
+		height: 450px;
+	}
+
+	.liButton{
+		margin-top: 10%;
+	}
+
+	#header-add-coordenada{
+		margin-top: 20%;
+	}
+}
+
+@media screen and (min-width: 768px){
+	.pure-u-md-11-24{
+		margin-left: 1.5%;
+	}
+}

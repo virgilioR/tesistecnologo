@@ -12,6 +12,11 @@ from time import time, sleep
 from os import path
 
 class ControladorCamara():
+        def imprimir(self,texto):
+                print (texto) 
+                with open("/tmp/torreap", "a") as myfile:
+                        myfile.write(str(texto)+ "\n")
+        
 	def __init__(self):
 		self.config = Config()
 		self.persistencia=Persistencia(self.config)
@@ -99,9 +104,17 @@ class ControladorCamara():
 			self.camara.stop_preview()
 
 	def altaRecorrido(self,padron,alt,vel,tipo,coords, esrel, xrel, yrel,cantpuntos,dist,umbral, solapamiento):
+		print("altaRecorrido")
 		r=Recorrido(str(padron),float(alt),float(vel),int(tipo),None, cantpuntos,dist,umbral, solapamiento, None, coords,self.config, self.persistencia, esrel, xrel, yrel)
+		print("Fin Recorrido")
 		self.recorridos.append(r)
 		return r
+
+	def borrarBD(self):
+                self.persistencia.borrarBD()
+
+        def borrarFotosBD(self, idMision):
+                self.persistencia.borrarFotos(idMision)
 	
 	def getDatosRecorridos(self):
 		res=[]
@@ -303,7 +316,7 @@ class ControladorCamara():
 		if not path.isfile(rutamin):
 			rutaabs=self.getConfig().dirfotos+ruta
 			i=Image.open(rutaabs)
-			i.thumbnail((200,150), Image.ANTIALIAS)
+			i.thumbnail((120,70), Image.ANTIALIAS)
 			i.save(rutamin, i.format)
 		return rutamin
 
@@ -334,9 +347,10 @@ class ControladorCamara():
 
 	def getDataMisiones(self, mindex1, mindex2,tipo, cantai, calif, rangocstring,resize,amin):
 		print "cantidad de estacas "+ str(cantai)
-
+                self.imprimir("entrandoalafuncion")
 		if calif!=None:
 			print "rango colores" + rangocstring
+			self.imprimir("calif distinto none")
 			##configuracion del threshold de colores, el rangoc
 			rangoc = []
 			for e in rangocstring.split(";"):
@@ -350,6 +364,7 @@ class ControladorCamara():
 
 		dataMisiones=[]
 		for m in self.misiones:
+                        self.imprimir("tres")
 			if m.getTipo()==tipo and m.getId()>=mindex1 and m.getId()<=mindex2:
 				#Si hay que calificarla la califico
 				if calif!=None:

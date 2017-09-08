@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<?xml version="1.0" encoding="utf-8"?>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example with a side menu that hides on mobile, just like the Pure website.">
+    <title>Misión actual</title>
+    
+    <link rel="stylesheet" type="text/css" href="static/style/pure-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/grids-responsive.css">
+    <link rel="stylesheet" type="text/css" href="static/style/remodal.css">
+    <link rel="stylesheet" type="text/css" href="static/style/remodal-default-theme.css">
+    <link rel="stylesheet" type="text/css" href="static/style/norm-div-modal.css">
+    <link rel="stylesheet" type="text/css" href="static/style/menus-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/acordeon.css">
+    <link rel="stylesheet" type="text/css" href="static/style/buttons-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/buttons-core-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/uilspin.css">
+    <link rel="stylesheet" type="text/css" href="static/style/noty.css">
+    <link rel="stylesheet" type="text/css" href="static/style/side-menu.css">
+    <link rel="stylesheet" type="text/css" href="static/style/modalestadodron.css">
+    <link rel="stylesheet" type="text/css" href="static/style/normalize.css">
+    <link rel="stylesheet" type="text/css" href="static/style/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="static/style/administracion.css">
+    
+</head>
+<body>
+<div id="layout">
+    <!-- Menu toggle -->
+    <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+    </a>
+
+    <div id="menu">
+      <div class="pure-menu custom-restricted-width">
+        <a class="pure-menu-heading" href="/">Inicio</a>
+        <ul class="pure-menu-list acorh">
+	  <li class="pure-menu-item"><a href="/administracion" class="pure-menu-link"><br>Administracion</a>
+	    <ul></ul>
+	  </li>
+          <li class="pure-menu-item"><a href="/gestionmision" class="pure-menu-link"><br>Gestionar misión</a>
+            <ul></ul>
+          </li>
+          <li class="pure-menu-item"><a href="/" class="pure-menu-link"><br>Misión actual</a>
+	    <ul></ul>
+          </li>
+          <li class="pure-menu-item"><a href="/listadomisiones" class="pure-menu-link"><br>Listado de misiones</a>
+            <ul></ul>
+          </li>
+          <li class="pure-menu-item"><a href="/listadofotos" class="pure-menu-link"><br>Listado de fotos</a>
+            <ul></ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="main" class="norm-main-admin">
+      <div class="content">
+	<div class="pure-g">
+	  <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4 norm-title-1">
+	    <div class="l-box">
+	      <br>
+	      <h1>Administracion</h1>
+	    </div>
+	  </div>
+	  <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4 norm-pure-insider-2 orange-border">
+	    <div class="l-box" style="padding: 5px;">
+	      <h3>Reiniciar servicio web</h3>
+	      <p>En caso que el servicio web genere problemas, puede presionar el siguiente boton para reiniciar el mismo.</p>
+	      <br>
+	      <button class="button-warning pure-button" onclick="restartWeb()">REINICIAR</button>
+	    </div>
+	  </div>
+	  <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4 norm-pure-insider-2 red-border">
+	    <div class="l-box" style="padding: 5px;">
+	      <h3>Reiniciar raspberry</h3>
+	      <p>En caso de que sea necesario reiniciar la raspberry puede hacerlo con el siguiente boton. Tenga en cuenta que este proceso puede tardar unos minutos.</p>
+	      <button class="button-error pure-button" onclick="restartRasp()">REINICIAR</button>
+	    </div>
+	  </div>
+	  <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4 norm-pure-insider-2 red-border">
+	      <h3>Apagar raspberry</h3>
+	      <p>Se recomienda una vez finalizado el recorrido y la mision, se apague la raspberry con el siguiente boton. Luego de confirmar, la raspberry se apagara en 1 minuto.</p>
+	      <button class="button-error pure-button" onclick="shutingdownRasp()">APAGAR</button>
+	    </div>
+	</div>
+	<div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4" style="width: 1000px; max-width: 1000px;">
+	  <div class="l-box">
+	    <br>
+	    <h2>Consola</h2>
+	  </div>
+	</div>
+	  <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4 norm-consolelog">
+	    <div class="l-box">
+	      <p id="msgconsola" style="color: white;"></p>
+	    </div>
+	  </div>
+	  <div class="norm-downloadlog"><button class="norm-downloadlog-button" id="btnDescargaLogs" onclick="descargarLogs()"><i class="fa fa-download" aria-hidden="true"></i></button></div>
+	</div>
+	  
+    </div>
+    <div class="footer">
+        <div class="pure-g">
+            <div class="pure-u-1 norm-footer"><br><br>Tesis de grado 2017</div>
+        </div>
+    </div>
+    </div>
+</div>
+<script src="static/scripts/jquery.min.js"></script>
+<script src="static/scripts/noty.js"></script>
+<script src="static/scripts/ui.js"></script>
+<script src="static/scripts/menus.js"></script>
+<script src="static/scripts/remodal.min.js"></script>
+<script src="static/scripts/ourstyle.js"></script>
+<script src="static/scripts/ajax.js"></script>
+</body>
+</html>

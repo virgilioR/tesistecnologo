@@ -1,0 +1,7 @@
+.lbox:target > img, .lbox:target > div {
+    border: 12px solid rgba(0,0,0,0.8);
+}
+
+.custom-restricted-width{
+    display: inline-block;
+}

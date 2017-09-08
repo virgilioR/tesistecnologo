@@ -1,17 +1,24 @@
 #!/usr/bin/env python
 # coding=utf-8
+import shlex, subprocess
 from dronekit import connect, VehicleMode, LocationGlobalRelative, LocationGlobal
 from Queue import Queue
 from os import system
-from flask import Flask, jsonify, Response, request, send_file, render_template
+from flask import Flask, jsonify, Response, request, send_file, render_template, send_from_directory
 import json
+import os
+from commands import *
 import socket
 from threading import Thread, Event, Lock
 from datetime import datetime
+import dateutil.parser
 from math import pi,cos, sqrt,sin, atan2, radians
 from controladorcamara import ControladorCamara
 #from config import Config
 from time import time,sleep
+
+import gpxpy 
+import gpxpy.gpx
 
 vehicle = None
 xlimizq=0
@@ -23,6 +30,7 @@ controlador=None
 #configuracion=None
 
 def imprimir(texto):
+	print (texto) 
 	with open("/tmp/torreap", "a") as myfile:
 		myfile.write(str(texto)+ "\n")
 
@@ -65,6 +73,34 @@ def cambiarfecha():
 		imprimir(str(e))
 		return jsonify(ok=False)
 
+@app.route("/administracion",methods=['GET'])
+def administracion():
+	return render_template('administracion.html', branding=False)
+
+@app.route("/api/restartweb",methods=['GET', 'POST'])
+def api_restartweb():
+        p = subprocess.call(shlex.split('supervisorctl restart torreap'))
+        return p
+
+@app.route("/api/restartrasp",methods=['GET', 'POST'])
+def api_restartrasp():
+        reboot = subprocess.call(shlex.split('shutdown -r -t 1'))
+        return reboot
+
+@app.route("/api/shutdownrasp",methods=['GET', 'POST'])
+def api_shutdownrasp():
+        shutd = subprocess.call(shlex.split('shutdown -h 1'))
+        return shutd
+
+@app.route("/api/consolelog",methods=['GET','POST'])
+def api_consolelog():
+        #retorno = subprocess.check_output(shlex.split('tail /var/log/supervisor/supervisor.err.log'))
+        retorno = ""
+        with open("/tmp/torreap") as myfile:
+		for line in myfile:
+                        retorno = retorno + line + "<br>"
+        return retorno
+
 @app.route("/gestionmision")
 def gestionmision():
 	return render_template('gestionmision.html', branding=False)
@@ -92,10 +128,11 @@ def listadofotos():
 
 @app.route("/listadomisiones", methods=['GET','POST'])
 def listadomisiones():
+        imprimir("entrandoalafuncion")
 	global controlador
 	dataMisiones=[]
 	tipoint=0
-	cantaiint=10
+	cantaiint=0
 	resizeint=0.6
 	aminint=6
 	try:
@@ -103,18 +140,25 @@ def listadomisiones():
 		mindex2 = request.form.get('mision2')
 		tipo = request.form.get('tipo')
 		calif = request.form.get('calif')
-		cantai = request.form.get('cantai')
+		#cantai = request.form.get('cantai')
 		rangoc = request.form.get('rangoc')
 		amin = request.form.get('amin')
-		resize = request.form.get('resize')
+		#resize = request.form.get('resize')
 		if mindex1!=None and mindex2!=None:
+			imprimir("onomeatropella")
 			mindex1=int(mindex1)
+			print ("2")
 			mindex2=int(mindex2)
-			tipoint=int(tipo)
-			cantaiint=int(cantai)
-			resizeint=float(resize)
-			aminint=int(amin)
+			print ("3")
+			tipoint=1
+			print ("4")
+			cantaiint=0
+			#resizeint=float(resize)
+			resizeint=0
+			#aminint=int(amin)
+			aminint=0
 			#print mindex
+			imprimir("antesdedatamisiones")
 			dataMisiones=controlador.getDataMisiones(mindex1, mindex2,tipoint, cantaiint, calif,rangoc,resizeint,aminint)
 		return render_template('listadomisiones.html', misiones=controlador.getMisiones(),
 							   dataMisiones=dataMisiones, msel1=mindex1, msel2=mindex2,tipo=tipoint,
@@ -196,12 +240,14 @@ def guardarrec():
 			alt=float(request.json['alt'])
 			vel=float(request.json['vel'])
 			tipo=int(request.json['tipo'])
-			cantpuntos = int(request.json['cantpuntos'])
+#			cantpuntos = int(request.json['cantpuntos'])
+			cantpuntos = 0
 			coordaux=request.json['coordenadas']
 			relativas=bool(request.json['rel'])
 			xrel=float(request.json['xrel'])
 			yrel=float(request.json['yrel'])
-			dist = float(request.json['dist'])
+			#dist = float(request.json['dist'])
+			dist = 0
 			umbral = float(request.json['umbral'])
 			solapamiento = float(request.json['sol'])
 			#coordenadas.append([x,y,h])
@@ -709,6 +755,206 @@ def api_mode():
         except Exception as e:
             imprimir(str(e))
             return jsonify(ok=False)
+
+
+
+@app.route("/api/descargar/<nombreArchivo>", methods=['GET', 'POST'])
+def api_descargar(nombreArchivo):
+	ruta = 'fotos/'
+
+	if nombreArchivo:
+		return send_file(ruta + nombreArchivo, as_attachment=True)
+
+@app.route("/api/comprimir/<nombreArchivo>", methods=['GET', 'POST', 'PUT'])
+def api_comprimir(nombreArchivo):
+	ruta = 'fotos/'
+	archivos = ""
+	
+	for file in os.listdir(ruta):
+		if file.startswith(nombreArchivo):
+			archivos = archivos + " " + os.path.join(ruta, file)
+
+	if archivos:
+		nombreArchivo = "fotos_" + nombreArchivo + ".tar.gz"
+		try:
+				text = getstatusoutput("tar -zcvf " + ruta + nombreArchivo + archivos)	
+				#return send_from_directory(directory=ruta, filename=nombreArchivo, as_attachment=True)
+				return jsonify(ok=True, nombre=nombreArchivo)
+		except Exception as e:
+			return jsonify(ok=False, nombre=str(e))
+	return jsonify(ok=False, nombre="No hay ninguna foto de la mision")
+
+@app.route("/api/versihayfotos/<nombreArchivo>", methods=['GET', 'POST', 'PUT'])
+def api_versihayfotos(nombreArchivo):
+	ruta = 'fotos/'
+	archivos = ""
+	
+	for file in os.listdir(ruta):
+		if file.startswith(nombreArchivo):
+			archivos = archivos + " " + os.path.join(ruta, file)
+
+	if archivos:
+		return jsonify(ok=False) 
+	return jsonify(ok=False, nombre="No hay ninguna foto de la mision")
+
+@app.route("/api/descargarlogs", methods=['GET', 'POST'])
+def api_descargarlogs():
+       return send_file("/tmp/torreap", as_attachment=True)	
+
+@app.route("/api/descargarbd", methods=['GET', 'POST'])
+def api_descargarbd():
+       return send_file("bd.backup", as_attachment=True)
+
+@app.route("/api/limpiarbd", methods=['PUT', 'POST'])
+def api_limpiarbd():
+        global controlador
+        controlador.borrarBD()
+        p = subprocess.call(shlex.split('supervisorctl restart torreap'))
+        return p
+
+       
+		
+@app.route("/api/cargargpx", methods=['POST', 'PUT'])
+def api_cargargpx():
+    if request.method == 'POST' or request.method == 'PUT':
+        
+        fechaMin = request.json['fechaMin']
+        fechaMax = request.json['fechaMax']
+
+        
+        if not fechaMin:
+                minFecha = dateutil.parser.parse('1950-01-01')
+        else:
+                minFecha = dateutil.parser.parse(fechaMin)
+                
+        if not fechaMax:
+                maxFecha = dateutil.parser.parse('2030-01-01')
+        else:
+                maxFecha = dateutil.parser.parse(fechaMax)
+
+                
+        archivo = ''
+        hayPendrive = False
+        hayCarpetaCoor = False
+        ruta = "/media/pi"
+        #ruta = "C:/wamp64/"
+
+        for file in os.listdir(ruta):
+            if file: 
+                hayPendrive = True
+                path = os.path.join(ruta, file)
+                if os.path.isdir(path):
+                    for carpetaPendrive in os.listdir(path):
+                        if carpetaPendrive.startswith("coordenadasDron"):
+                            hayCarpetaCoor = True
+                            nuevoPath =  os.path.join(path, carpetaPendrive)
+                            if os.path.isdir(nuevoPath):
+                                for filePendrive in os.listdir(nuevoPath):
+                                    if filePendrive.endswith(".gpx"):
+                                        print(os.path.join(nuevoPath, filePendrive))
+                                        archivo = os.path.join(nuevoPath, filePendrive)
+                                        break
+
+		if not hayPendrive:
+			return 'No hay pendrive'
+		if not hayCarpetaCoor:
+			return 'No hay carpeta'
+        if not archivo:
+                return 'No hay archivo'
+        gpx_file =open(archivo,'r') 
+        gpx=gpxpy.parse(gpx_file)
+
+        stri = "{"
+        cont = 0
+        for waypoint in gpx.waypoints:
+                fecha = waypoint.time
+                if not fecha:
+                        fecha = waypoint.description
+                        if fecha:
+                                nueva = fecha    
+                else :
+                        nueva = fecha
+
+                parseada = ''
+                if fecha:
+                        parseada = get_date(fecha)
+                if parseada:
+                        if cumplen_condiciones(parseada, minFecha, maxFecha):
+                                if not waypoint.name:
+                                        waypoint.name = '' + str(cont)
+                                stri = stri+"{nombre:'"+waypoint.name+"', latitud: '"+str(waypoint.latitude)+"',longitud: '"+str(waypoint.longitude)+"'}," 
+                                cont += 1
+         
+        if cont > 0:    
+                s = stri[:len(stri) -1]
+                s = s+"}"
+        else:
+                s = '0'
+        return s
+
+def get_date(stringFecha):
+  try:
+    fechaNueva = dateutil.parser.parse(stringFecha)
+    fechaNueva = fechaNueva.replace(hour=0 , minute = 0 ,second = 0)
+    return fechaNueva
+  except:
+    pass
+  return None
+
+@app.route("/api/borrarfotos/<idMision>", methods=['GET', 'POST', 'PUT'])
+def api_borrarfotos(idMision):
+        global controlador
+	ruta = 'fotos/'
+	archivos = ""
+	
+	archivos = ruta+"fotos_" + idMision + ".tar.gz"
+	if(idMision != '0'):
+                for file in os.listdir(ruta):
+                        if (file.startswith(idMision) or file.startswith("min-" + idMision)) and (file.endswith(".png") or file.endswith('.jpg') or file.endswith('.jpeg')):
+                                archivos = archivos + " " + os.path.join(ruta, file)
+        else:
+               for file in os.listdir(ruta):
+                        if file.endswith(".png") or file.endswith('.jpg') or file.endswith('.jpeg') or file.endswith('.tar.gz'):
+                                archivos = archivos + " " + os.path.join(ruta, file) 
+	try:	
+                controlador.borrarFotosBD(idMision)
+		if archivos:
+			text = getstatusoutput("rm " + archivos)
+			#return send_from_directory(directory=ruta, filename=nombreArchivo, as_attachment=True)
+		return jsonify(ok=True)
+	except Exception as e:
+		return jsonify(ok=False, nombre=str(e))
+
+@app.route("/api/exportarbd", methods=['POST', 'PUT'])
+def api_exportarbd():
+	global controlador
+	bdname = controlador.getConfig().db
+	bduser = controlador.getConfig().dbuser
+	bdpass = controlador.getConfig().dbpass
+	host = controlador.getConfig().dbhost
+
+	try:
+		comando = "set PGPASSWORD=[" + bdpass + "] pg_dump -U " + bduser + " -h " + host + " " + bdname + " > bd.backup"
+		text = getstatusoutput(comando)	
+		
+		return jsonify(ok=True)
+	except Exception as e:
+		return jsonify(ok=False, nombre=str(e))
+
+
+def cumplen_condiciones(fecha, minFecha, maxFecha):
+  retorno = True
+  if fecha:
+    if minFecha:
+      if fecha < minFecha:
+        retorno = False
+    if maxFecha:
+      if fecha > maxFecha:
+        retorno = False
+  else: 
+    retorno = False
+
+  return retorno
 
 def state_msg():
 	global t_parada

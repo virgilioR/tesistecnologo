@@ -1,170 +1,252 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Listado fotos</title>
-    <style type="text/css">
-        #misiones{
-            width:5000px;
-            //border:1px solid #000;
-        }
-        #misiones td{
-            border:1px solid #000;
-            text-align:center;
-        }
-        .mostrarfotos{
-            width:2000px;
-        }
-        .fotoycalif{
-            float:left;
-            width:200px;
-        }
-
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example with a side menu that hides on mobile, just like the Pure website.">
+    <title>Listado de misiones</title>
+    
+    <link rel="stylesheet" type="text/css" href="static/style/pure-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/grids-responsive.css">
+    <link rel="stylesheet" type="text/css" href="static/style/menus-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/acordeon.css">
+    <link rel="stylesheet" type="text/css" href="static/style/buttons-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/buttons-core-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/uilspin.css">
+    <link rel="stylesheet" type="text/css" href="static/style/select2.css">
+    <link rel="stylesheet" type="text/css" href="static/style/listadomisiones.css">
+    <link rel="icon" type="image/png" href="/static/images/drone.png" />  
+    
+    
+        <!--[if lte IE 8]>
+            <link rel="stylesheet" href="/combo/1.18.13?/css/layouts/side-menu-old-ie.css">
+        <![endif]-->
+        <!--[if gt IE 8]><!-->
+            <link rel="stylesheet" href="static/style/side-menu.css">
+        <!--<![endif]-->
+    <!--[if lt IE 9]>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.js"></script>
+    <![endif]-->
 </head>
 <body>
-    <h1>Misiones</h1>
-    <form name="formmision" action="listadomisiones" method="post">
-    Elegir tipo de recorrido {{tipo}}: <SELECT name="tipo" id="tipo">
-    <OPTION value="0" {% if 0==tipo %} selected="selected" {% endif %}>Estacas</OPTION>
-    <OPTION value="1" {% if 1==tipo %} selected="selected" {% endif %}>Mapping</OPTION>
-    </SELECT>
-    <br/>
+<div id="layout">
+    <!-- Menu toggle -->
+    <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+    </a>
 
-    Elegir las 2 misiones:
-    <select name="mision1" id="mision1">
-    {% for m in misiones %}
-        <option value="{{ m.getId() }}" {% if msel1 != None and m.getId()==msel1 %} selected="selected" {% endif %} >Misión {{ m.getId() }}</option>
-    {% else %}
-        <em>No hay ninguna misión para mostrar</em>
-    {% endfor %}
-    </select>
+    <div id="menu">
+      <div class="pure-menu custom-restricted-width">
+        <a class="pure-menu-heading" href="/">Inicio</a>
+        <ul class="pure-menu-list acorh">
+	  <li class="pure-menu-item"><a href="/administracion" class="pure-menu-link"><br>Administracion</a>
+	    <ul></ul>
+	  </li>
+          <li class="pure-menu-item"><a href="/gestionmision" class="pure-menu-link"><br>Gestionar recorrido</a>
+            <ul></ul>
+          </li>
+          <li class="pure-menu-item"><a href="/" class="pure-menu-link"><br>Misión actual</a>
+            <ul></ul>
+	  </li>
+          <li class="pure-menu-item"><a href="/listadomisiones" class="pure-menu-link"><br>Listado de misiones</a>
+            <ul></ul>
+          </li>
+          <li class="pure-menu-item"><a href="/listadofotos" class="pure-menu-link"><br>Listado de fotos</a>
+            <ul></ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="main">
+        <div class="content">
+            <div class="pure-g">
+                <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4" style="width: 100%; text-align: center;">
+                    <div class="l-box">
+                        <h2>Misiones</h2>
+                        <form name="formmision" action="listadomisiones" method="post">
+			    <table class="pure-table pure-table-horizontal widgetMisiones" style="font-size: small; margin: 0 auto;">
+			        <tbody>
+				    <tr>
+					<td><p>Tipo de recorrido:</p></td>
+					<td><!--SELECT name="tipo" id="tipo">
+                        		    <OPTION value="1" {% if 1==tipo %} selected="selected" {% endif %}>Mapping</OPTION>
+                        		    </SELECT--> Mapping</td>
+				    </tr>
+				    <tr>
+					<td><p>Elegir las 2 misiones:</p></td>
+					<td><select name="mision1" id="mision1">
+		                            {% for m in misiones %}
+		                            <option value="{{ m.getId() }}" {% if msel1 != None and m.getId()==msel1 %} selected="selected" {% endif %} >Recorrido {{ m.getRecorrido().getId() }} Misión {{ m.getId() }} {{ m.getFecha() }}</option>
+		                            {% else %}
+		                            <option value="0" selected="selected" >No hay misiones</option>
+		                            {% endfor %}
+                        		    </select>
+					    <select name="mision2" id="mision2">
+		                            {% for m in misiones %}
+		                            <option value="{{ m.getId() }}" {% if msel2 != None and m.getId()==msel2 %} selected="selected" {% endif %} >Recorrido {{ m.getRecorrido().getId() }} Misión {{ m.getId() }} {{ m.getFecha() }}</option>
+		                            {% else %}
+                                    <option value="0" selected="selected" >No hay misiones</option>
+		                            {% endfor %}
+                        		    </select></td>
+				    </tr>
+				    <!--tr>
+					<td><p>Rango de colores:</p></td>
+					<td><input type="text" name="rangoc" id="rangoc" value="(50,100);(80,160);(130,255)"/></td-->
+				    	<!--EL ULTIMO rgb (50,100);(85,160);(150,255) -->
+                            		<!--NGB [(50,85), (60,125), (105,175)] -->
+				    <!--/tr>
+				    <tr>
+					<td><p>Area mínima:</p></td>
+					<td><input type="text" name="amin" id="amin" value="{{amin}}" size="4" maxlength="4"/></td>
+				    </tr-->
+				    <!--tr>
+					<td><p>Redimension:</p></td>
+					<td><input type="text" name="resize" id="resize" value="{{resize}}" size="4" maxlength="4"/></td>
+				    </tr-->
+				   <!-- <tr>
+					<td>Cantidad de áreas de interés a mostrar:</td>
+					<td><input type="text" name="cantai" id="cantai" value="{{cantai}}" size="4" maxlength="4"/></td>
+				    </tr> -->
+				    <tr style='text-align: center;'><td colspan="2">
+                    <input class="pure-button button-success" type="submit" name="enviar" value="Buscar"/>
+				    </td></tr>
+				</tbody>
+			    </table>
+                        </form>
+			<br/>
+                        <br/>
+                        <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4" style="width:100%;text-align: center; overflow-x: auto;">
+			    <table class="pure-table" style="font-size: small; margin: 0 auto;" id="misiones" border="0" cellpadding="0" cellspacing="0">
+                            <thead>
+				<tr>
+                                    <td>Mision</td>
+                                    <td>Tipo</td>
+                                    <td>Altura</td>
+                                    <td>Velocidad</td>
+                                    <td>Padron</td>
+                                    <td>UmbralMis</td>
+                                    <td>Demora</td>
+                                    <td>Resolucion</td>
+                                    <!--td>Cuenta</td-->
+                                    <td>UmbralRec</td>
+                                    <td>Tiempo</td>
+                                    <td>Distancia</td>
+                                    <td>Bateria</td>
+                                    <td>N Fotos</td>
+                                    <td>Prom. Alt.(cm)</td>
+                                    <!-- {% for i in range(cantai) %}
+                                    <td colspan="3">Estaca {{i}}</td>
+                                    {% endfor %} -->
+                                    <td>Fotos</td>
+                                </tr>
+			    </thead>
+			    {% set po = 0 %}
+                        {% for m in dataMisiones %}
+			    <tbody>
+                            <tr>
+                                <td rowspan="3">{{ m["idm"]}}</td>
+                                <td rowspan="3">{% if m["recorrido"]["tipo"]==0 %}
+                                        Estacas
+                                {% else %}
+                                        Mapping
+                                {% endif %}</td>
+                                <td rowspan="3">{{ m["recorrido"]["vel"] }}</td>
+                                <td rowspan="3">{{ m["recorrido"]["alt"] }}</td>
+                                <td rowspan="3">{{ m["recorrido"]["padron"] }}</td>
+                                <td rowspan="3">{{ m["umbral"] }}</td>
+                                <td rowspan="3">{{ m["demora"] }}</td>
+                                <td rowspan="3">{{ m["resolucion"] }}</td>
+                                <!--td rowspan="3">{{ m["recorrido"]["calculodist"] }}</td-->
+                                <td rowspan="3">{{ m["recorrido"]["umbral"] }}</td>
+                                <td rowspan="3">{{ m["tiempo"] }}</td>
+                                <td rowspan="3">{{ m["disttotal"] }}</td>
+                                <td rowspan="3">{{ m["bateria"] }}</td>
+                                <td rowspan="3">{{ m["cantFotos"] }}</td>
 
-    <select name="mision2" id="mision2">
-    {% for m in misiones %}
-        <option value="{{ m.getId() }}" {% if msel2 != None and m.getId()==msel2 %} selected="selected" {% endif %} >Misión {{ m.getId() }}</option>
-    {% else %}
-        <em>No hay ninguna misión para mostrar</em>
-    {% endfor %}
-    </select>
-    <br/>
+                                <td rowspan="3">{{ m["promAlturas"] }}</td>
 
-    Rango de colores: <input type="text" name="rangoc" id="rangoc" value="(50,100);(80,160);(130,255)"/>
+                                <!--Los totales de todo-->
+				<!--
+                                {% for i in range(m["cantAi"]) %}
+                                    {% if m["promScoreAi"][i]<0 %}
+                                        <td colspan="{{ m['recorrido']['cantpuntos'] }}" > </td>
+                                    {% else %}
+                                        <td colspan="{{ m['recorrido']['cantpuntos']/2 }}">{{ m["alturasAi"][i] }}</td>
+                                        <td colspan="{{ m['recorrido']['cantpuntos']/2 + 1  }}">{{ m["promScoreAi"][i] }}</td>
+                                    {% endif %}
 
-        <!--EL ULTIMO rgb (50,100);(85,160);(150,255) -->
-        <!--NGB [(50,85), (60,125), (105,175)] -->
-    <br/>
+                                {% endfor %}
+                                {% for i in range(cantai-m["cantAi"]) %}
+                                    <td rowspan="3" colspan="{{ m['recorrido']['cantpuntos'] }}" ></td>
+                                {% endfor %}
 
-    Area mínima: <input type="text" name="amin" id="amin" value="{{amin}}" size="4" maxlength="4"/>
-    <br/>
-
-    Redimension: <input type="text" name="resize" id="resize" value="{{resize}}" size="4" maxlength="4"/>
-    <br/>
-
-
-    Cantidad de áreas de interés a mostrar: <input type="text" name="cantai" id="cantai" value="{{cantai}}" size="4" maxlength="4"/>
-    <br/>
-
-    <input type="submit" name="enviar" value="Buscar"/>
-    <input type="submit" name="calif" value="Calificar"/>
-    </form>
-
-    <br/>
-    <table id="misiones" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-            <td>Mision</td>
-            <td>Tipo</td>
-            <td>Altura</td>
-            <td>Velocidad</td>
-            <td>Padron</td>
-            <td>UmbralMis</td>
-            <td>Demora</td>
-            <td>Resolucion</td>
-            <td>Cuenta</td>
-            <td>UmbralRec</td>
-            <td>Tiempo</td>
-            <td>Distancia</td>
-            <td>Bateria</td>
-            <td>N Fotos</td>
-            <td>Tot. Est.</td>
-            <td>Prom. Sco.</td>
-            <td>Prom. Alt.(cm)</td>
-            {% for i in range(cantai) %}
-            <td colspan="3">Estaca {{i}}</td>
-            {% endfor %}
-            <td class="mostrarfotos">Fotos</td>
-        </tr>
-    {% for m in dataMisiones %}
-        <tr>
-            <td rowspan="3">{{ m["idm"]}}</td>
-            <td rowspan="3">{% if m["recorrido"]["tipo"]==0 %}
-                    Estacas
-            {% else %}
-                    Mapping
-            {% endif %}</td>
-            <td rowspan="3">{{ m["recorrido"]["vel"] }}</td>
-            <td rowspan="3">{{ m["recorrido"]["alt"] }}</td>
-            <td rowspan="3">{{ m["recorrido"]["padron"] }}</td>
-            <td rowspan="3">{{ m["umbral"] }}</td>
-            <td rowspan="3">{{ m["demora"] }}</td>
-            <td rowspan="3">{{ m["resolucion"] }}</td>
-            <td rowspan="3">{{ m["recorrido"]["calculodist"] }}</td>
-            <td rowspan="3">{{ m["recorrido"]["umbral"] }}</td>
-            <td rowspan="3">{{ m["tiempo"] }}</td>
-            <td rowspan="3">{{ m["disttotal"] }}</td>
-            <td rowspan="3">{{ m["bateria"] }}</td>
-            <td rowspan="3">{{ m["cantFotos"] }}</td>
-            {% if m["promScoreTot"]<0 %}
-                <td rowspan="3" colspan="2" >No cal.</td>
-            {% else %}
-                <td rowspan="3">{{ m["cantRegionesTot"] }}</td>
-                <td rowspan="3">{{ m["promScoreTot"] }}</td>
-            {% endif %}
-
-            <td rowspan="3">{{ m["promAlturas"] }}</td>
-
-            <!--Los totales de todo-->
-            {% for i in range(m["cantAi"]) %}
-                {% if m["promScoreAi"][i]<0 %}
-                    <td colspan="{{ m['recorrido']['cantpuntos'] }}" > </td>
-                {% else %}
-                    <td colspan="{{ m['recorrido']['cantpuntos']/2 }}">{{ m["alturasAi"][i] }}</td>
-                    <td colspan="{{ m['recorrido']['cantpuntos']/2 + 1  }}">{{ m["promScoreAi"][i] }}</td>
-                {% endif %}
-
-            {% endfor %}
-            {% for i in range(cantai-m["cantAi"]) %}
-                <td rowspan="3" colspan="{{ m['recorrido']['cantpuntos'] }}" ></td>
-            {% endfor %}
-
-            <td rowspan="3">
-                {% for f in m["fotos"] %}
-                <div class="fotoycalif">
-                     <a href="/grande/{{ f['ruta'] }}" target="_blank" ><img src="/imgchica/{{ f['ruta'] }}" alt="{{ f['ruta'] }}" /></a>
+                                <td rowspan="3">
+                                    {% for f in m["fotos"] %}
+                                    <div class="fotoycalif">
+                                         <a href="/grande/{{ f['ruta'] }}" target="_blank" ><img src="/imgchica/{{ f['ruta'] }}" alt="{{ f['ruta'] }}" /></a>
+                                    </div>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+-->
+				<!-- ACA SE podria mejorar la visualizacion de la cantidad de fotos en funcion de las areas de interes -->
+			    <tr>
+			      <td>
+			      <form style="text-align: center;" name="formmision" action="listadofotos" method="post">
+				 <select style="display: none;" name="mision" id="mision">
+				   <option value="{{ po }}" selected="selected">Misión {{ m["idm"] }}</option>
+				 </select>
+				<input class="pure-button" type="submit" name="enviar" value="Galeria {{ m['idm']}}"/>
+			      </form>
+			      </td>
+			      {% set po=po+1 %}
+			    </tr>
+			    <!--
+                            <tr>
+                            {% for f in m["fotos"] %}
+                                {% if f["score"]!=-1 %}
+                                    <td>{{ f["altoPasto"] }}</td>
+                                {% endif %}
+                            {% endfor %}
+                            </tr>
+                            <tr>
+                            {% for f in m["fotos"] %}
+                                {% if f["score"]==-1 %}
+                                    <td rowspan="2" >No cal.</td>
+                                {% else %}
+                                    <td>{{ f["score"] }}</td>
+                                {% endif %}
+                            {% endfor %}
+                            </tr>
+			    -->
+			    </tbody>
+                        {% endfor %}
+                        </table>
+			</div>
+                    </div>
                 </div>
-                {% endfor %}
-            </td>
-        </tr>
-
-        <!-- ACA SE podria mejorar la visualizacion de la cantidad de fotos en funcion de las areas de interes -->
-
-        <tr>
-        {% for f in m["fotos"] %}
-            {% if f["score"]!=-1 %}
-                <td>{{ f["altoPasto"] }}</td>
-            {% endif %}
-        {% endfor %}
-        </tr>
-        <tr>
-        {% for f in m["fotos"] %}
-            {% if f["score"]==-1 %}
-                <td rowspan="2" >No cal.</td>
-            {% else %}
-                <td>{{ f["score"] }}</td>
-            {% endif %}
-        {% endfor %}
-        </tr>
-    {% endfor %}
-    </table>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="footer">
+        <div class="pure-g">
+            <div class="pure-u-1" style="height: 80px; background-color:#191818; color:white; text-align: center;"><br><br>Tesis de grado 2017</div>
+        </div>
+    </div>
+</div>
+<script src="static/scripts/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function (){
+        jQuery("#mision1").select2();
+        jQuery("#mision2").select2();
+    });
+</script>
+<script src="static/scripts/anexo_acordeon.js"></script>
+<script src="static/scripts/select2.js"></script>
+<script src="static/scripts/ui.js"></script>
+<script src="static/scripts/menus.js"></script>
 </body>
 </html>

@@ -18,6 +18,7 @@ class City:
       self.y = None
       self.h = h
       self.tipo=tipo
+
       if x is not None:
          self.x = x
       else:

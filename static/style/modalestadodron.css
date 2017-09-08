@@ -1,0 +1,110 @@
+/* Contenedor general contenido */
+        .hiddencon {
+        margin: 0;
+        padding: 0;
+        width: 0px;
+        z-index:1;
+        position: fixed;
+        top: 10px;
+        right: 0px;
+        opacity: .8;
+        background: #191818;
+        text-align:center;
+        vertical-align: center;
+        -moz-border-radius: 10px 0 0 10px;
+        -webkit-border-radius: 10px 0 0 10px;
+        border-radius: 10px 0 0 10px;
+        }
+        .hiddencon:hover{
+            opacity: 1;
+        }
+        .hiddencon2 {
+        top: auto;
+        bottom: 10px;
+        }
+        /* Contenido visible al hacer hover */
+        
+        /* Pestaña para desplegar */
+        .hiddencon-label {
+        margin-top: 0px;
+        margin-left: -210px;
+        padding: 10px;
+        position: absolute;
+        top: 30%;
+        display: none;
+        color: white;
+        /*background: #191818;*/
+        font-size: 20px;
+        -moz-border-radius: 20px 0 0 20px;
+        -webkit-border-radius: 20px 0 0 20px;
+        border-radius: 20px 0 0 20px;
+        cursor: pointer;
+        }
+        .hiddencon, .hiddencon-label {
+        /* Desplegado suave con transiciones */
+        -moz-transition: all 0.4s ease-in-out;
+        -webkit-transition: all 0.4s ease-in-out;
+        transition: all 0.4s ease-in-out;
+        }
+        /* El contenido incluida variante para listas */
+        .hiddencon p, .hiddencon table {
+        background-color: white;
+        text-align:center;
+        }
+        /* Estilo para listas */
+        .hiddencon ul {
+        margin:0;
+        overflow:auto;
+        }
+        .hiddencon li {
+        display: block;
+        }
+        .hiddencon li a {
+        display: block;
+        padding: 10px;
+        border-bottom: 1px solid #333;
+        color: #ddd;
+        -moz-transition: all 0.4s linear;
+        -webkit-transition: all 0.4s linear;
+        transition: all 0.4s linear;
+        }
+        .hiddencon li:last-child a{
+        border-bottom: 0;
+        }
+        .hiddencon li a:hover {
+        background-color: #333;
+        text-decoration: none;
+        }
+
+        @media only screen and (min-width: 768px) and (max-width: 959px) {  
+            .hiddencon {
+                right: -165px;
+                opacity: .5;
+            }
+        }
+
+
+
+.widgetEstadoDron{
+    border: 5px solid #0078e7; 
+    border-radius: 15px; 
+    margin-top: 5px; 
+    text-align: center;
+    height: 270px;
+    margin-right:15px; 
+}
+
+.tablaEstadoDron{
+    width: 100%;
+    border: 0 !important;
+}
+
+.thEstado{
+    border-top: 1px solid lightgray !important;
+    border-bottom: 1px solid lightgray !important;
+}
+
+.primerTabla td{
+    padding-top: 19px !important;
+    padding-bottom: 19px !important;
+}

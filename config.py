@@ -53,7 +53,7 @@ class Config():
 
 		#Puertos y base de datos
 		self.httpport=20000
-		self.db="ecarpi"
+		self.db="ecarnueva"
 		self.dbuser="torreap"
 		self.dbpass="6aUKpOCW0Tsj"
-		self.dbhost="localhost"
+		self.dbhost="127.0.0.1"

@@ -2,7 +2,7 @@ import psycopg2
 
 class Conexion():
     def __init__(self, config):
-        cadena = "host='"+config.dbhost+"' dbname='"+config.db+"' user='"+config.dbuser+"' password='"+config.dbpass+"'"
+        cadena = "host="+config.dbhost+" dbname="+config.db+" user="+config.dbuser+" password="+config.dbpass
         #print "Conectando a la base de datos\n	->%s" % (cadena)
         # get a connection, if a connect cannot be made an exception will be raised here
         self.conexion = psycopg2.connect(cadena)

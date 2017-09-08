@@ -1,0 +1,18 @@
+@app.route("/api/comprimir/<nombreArchivo>", methods=['GET', 'POST', 'PUT'])
+def api_comprimir(nombreArchivo):
+	ruta = 'fotos/'
+	archivos = ""
+	sleep(5)
+	for file in os.listdir(ruta):
+		if file.startswith(nombreArchivo):
+			archivos = archivos + " " + os.path.join(ruta, file)
+
+	if archivos:
+		nombreArchivo = "fotos_" + nombreArchivo + ".tar.gz"
+		try:
+				text = getstatusoutput("tar -zcvf " + ruta + nombreArchivo + archivos)	
+				#return send_from_directory(directory=ruta, filename=nombreArchivo, as_attachment=True)
+				return jsonify(ok=True, nombre=nombreArchivo)
+		except Exception as e:
+			return jsonify(ok=False, nombre=str(e))
+	return jsonify(ok=False, nombre="No hay ninguna foto de la mision")

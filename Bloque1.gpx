@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx
+  version="1.0"
+  creator="GPSBabel - http://www.gpsbabel.org"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.topografix.com/GPX/1/0"
+  xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
+<time>2017-04-01T00:44:18Z</time>
+<bounds minlat="-34.843987646" minlon="-58.060076097" maxlat="-32.318973430" maxlon="-56.201639939"/>
+<wpt lat="-32.378846454" lon="-58.042379972">
+  <ele>58.044800</ele>
+  <name>G211</name>
+  <cmt>30-MAR-17 15:18:31</cmt>
+  <desc>30-MAR-17 15:18:31</desc>
+  <sym>Flag, Blue</sym>
+</wpt>
+<wpt lat="-32.379066059" lon="-58.042849442">
+  <ele>55.401245</ele>
+  <name>G212</name>
+  <cmt>30-MAR-17 15:19:40</cmt>
+  <desc>30-MAR-17 15:19:40</desc>
+  <sym>Flag, Blue</sym>
+</wpt>
+<wpt lat="-32.379278792" lon="-58.043321930">
+  <ele>56.843140</ele>
+  <name>G213</name>
+  <cmt>30-MAR-17 15:20:53</cmt>
+  <desc>30-MAR-17 15:20:53</desc>
+  <sym>Flag, Blue</sym>
+</wpt>
+<wpt lat="-32.379795536" lon="-58.041739678">
+  <ele>58.044800</ele>
+  <name>G221</name>
+  <cmt>30-MAR-17 15:16:51</cmt>
+  <desc>30-MAR-17 15:16:51</desc>
+  <sym>Flag, Blue</sym>
+</wpt>
+<wpt lat="-32.380010448" lon="-58.042219877">
+  <ele>59.246460</ele>
+  <name>G222</name>
+  <cmt>30-MAR-17 15:15:57</cmt>
+  <desc>30-MAR-17 15:15:57</desc>
+  <sym>Flag, Blue</sym>
+</wpt>
+<wpt lat="-32.380211782" lon="-58.042652216">
+  <ele>64.053101</ele>
+  <name>G223</name>
+  <cmt>30-MAR-17 15:14:19</cmt>
+  <desc>30-MAR-17 15:14:19</desc>
+  <sym>Flag, Blue</sym>
+</wpt>
+<wpt lat="-32.379490687" lon="-58.042922281">
+  <ele>57.323853</ele>
+  <name>G2AMD</name>
+  <cmt>30-MAR-17 15:22:56</cmt>
+  <desc>30-MAR-17 15:22:56</desc>
+  <sym>Flag, Blue</sym>
+</wpt>
+<wpt lat="-32.379790172" lon="-58.042085432">
+  <ele>59.967407</ele>
+  <name>G2CELD</name>
+  <cmt>30-MAR-17 15:26:08</cmt>
+  <desc>30-MAR-17 15:26:08</desc>
+  <sym>Flag, Blue</sym>
+</wpt>
+<wpt lat="-32.380289566" lon="-58.042827146">
+  <ele>59.486816</ele>
+  <name>G2DRNI</name>
+  <cmt>30-MAR-17 15:12:50</cmt>
+  <desc>30-MAR-17 15:12:50</desc>
+  <sym>Flag, Blue</sym>
+</wpt>
+<wpt lat="-32.379982704" lon="-58.042680128">
+  <ele>57.083496</ele>
+  <name>G2GRD</name>
+  <cmt>30-MAR-17 15:24:12</cmt>
+  <desc>30-MAR-17 15:24:12</desc>
+  <sym>Flag, Blue</sym>
+</wpt>
+<wpt lat="-32.379397480" lon="-58.042408805">
+  <ele>57.323853</ele>
+  <name>G2NEGD</name>
+  <cmt>30-MAR-17 15:28:53</cmt>
+  <desc>30-MAR-17 15:28:53</desc>
+  <sym>Flag, Blue</sym>
+</wpt>
+<wpt lat="-32.379384153" lon="-58.042415679">
+  <ele>57.083496</ele>
+  <name>G2NEGU</name>
+  <cmt>30-MAR-17 15:27:41</cmt>
+  <desc>30-MAR-17 15:27:41</desc>
+  <sym>Flag, Blue</sym>
+</wpt>
+<wpt lat="-32.379262866" lon="-58.043016745">
+  <ele>56.602905</ele>
+  <name>G2ROD</name>
+  <cmt>30-MAR-17 15:22:00</cmt>
+  <desc>30-MAR-17 15:22:00</desc>
+  <sym>Flag, Blue</sym>
+</wpt>
+<wpt lat="-32.379067233" lon="-58.042475022">
+  <ele>56.362549</ele>
+  <name>G2ROOD</name>
+  <cmt>30-MAR-17 15:35:12</cmt>
+  <desc>30-MAR-17 15:35:12</desc>
+  <sym>Flag, Blue</sym>
+</wpt>
+<wpt lat="-32.379062707" lon="-58.042478291">
+  <ele>56.362549</ele>
+  <name>G2ROSU</name>
+  <cmt>30-MAR-17 15:34:32</cmt>
+  <desc>30-MAR-17 15:34:32</desc>
+  <sym>Flag, Blue</sym>
+</wpt>
+<wpt lat="-32.379360935" lon="-58.042400759">
+  <ele>56.843140</ele>
+  <name>Neq2D</name>
+  <cmt>30-MAR-17 15:38:24</cmt>
+  <desc>30-MAR-17 15:38:24</desc>
+  <sym>Flag, Blue</sym>
+</wpt>
+<wpt lat="-32.379359007" lon="-58.042397322">
+  <ele>56.843140</ele>
+  <name>Neq2U</name>
+  <cmt>30-MAR-17 15:39:02</cmt>
+  <desc>30-MAR-17 15:39:02</desc>
+  <sym>Flag, Blue</sym>
+</wpt>
+</gpx>

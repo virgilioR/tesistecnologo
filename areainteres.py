@@ -9,6 +9,8 @@ class AreaInteres():
 		# DECISIONES DINAMICAS
 		self.fotosbuenas=0
 		self.numbuenas=2
+
+		print "estoy en AreaInteres"
 		if idai!=None:
 			self.idai=idai
 		else:
@@ -23,6 +25,7 @@ class AreaInteres():
 					pAnterior = self.generarPunto(xant, yant, x, y, h, dist, umbral, True, False)
 					self.puntos.append(pAnterior)
 
+			print "antes de guardar el punto"
 			#Para cualquier caso siempre creamos un punto.
 			self.exacto=Punto(x,y,h,self,None,persistencia, True)
 			self.puntos.append(self.exacto)

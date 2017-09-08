@@ -1,0 +1,99 @@
+.widgetCustom{
+	border: 5px solid #0078e7; 
+	border-radius: 15px; 
+	margin-top: 5px; 
+	/*margin-left: 5px;
+	margin-right: 5px; */
+	text-align: center;
+	height: 100%;
+}
+
+.widgetBotones{
+	border: 5px solid #0078e7; 
+	border-radius: 15px; 
+	margin-top: 2%;
+	margin-bottom: 2%; 
+	margin-left: 2.2%;
+	margin-right: 2.2%;
+	display: inline-block;
+	text-align: left;
+}
+
+.tablaCustom{
+    width: 100%;
+    border: 0 !important;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px)  {
+    .pure-u-md-11-24{
+		height: 378px;
+	}
+
+}
+
+@media screen and (min-width: 768px){
+	.pure-u-md-11-24{
+		margin-left: 1.5%;
+	}
+}
+
+
+@media screen and (min-width: 1024px){
+	.pure-u-lg-11-24{
+		margin-left: 2.2%;
+	}
+	.widgetCustom{
+		height: 350px;
+	}
+
+}
+
+.pure-g {
+    letter-spacing: 0em;
+}
+
+.botonesLF{
+	display: inline-block;
+    margin-left: 25%;
+}
+
+@media only screen and (min-width: 900px) and (max-width: 1200px)  {
+    .botonesLF{
+	    margin-left: 20%;
+	}
+}
+@media only screen and (min-width: 768px) and (max-width: 899px)  {
+    .botonesLF{
+	    margin-left: 15%;
+	}
+}
+@media only screen and (min-width: 688px) and (max-width: 767px)  {
+    .botonesLF{
+	    margin-left: 18%;
+	}
+}
+
+@media only screen and (min-width: 645px) and (max-width: 687px)  {
+    .botonesLF{
+	    margin-left: 16%;
+	}
+}
+
+@media only screen and (min-width: 530px) and (max-width: 644px)  {
+    .botonesLF{
+	    margin-left: 15%;
+	}
+}
+
+
+@media only screen and (min-width: 490px) and (max-width: 529px)  {
+    .botonesLF{
+	    margin-left: 10%;
+	}
+}
+
+@media only screen and (max-width: 481px)  {
+    .botonesLF{
+	    margin-top: 10px;
+	}
+}

@@ -1,165 +1,247 @@
-<!doctype html>
-<html lang="en">
-  <head>
-  <script src="/static/scripts/jquery.min.js"></script>
-<script>
-    // Running in electron
-    try {
-        $ = jQuery = module.exports;
-        // If you want module.exports to be empty, uncomment:
-        // module.exports = {};
-    } catch(e) {}
-</script>
+<!DOCTYPE html>
+<html>
+<head>
+<?xml version="1.0" encoding="utf-8"?>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example with a side menu that hides on mobile, just like the Pure website.">
+    <title>Gestión de recorrido</title>
+    
+    <link rel="stylesheet" type="text/css" href="static/style/pure-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/grids-responsive.css">
+    <link rel="stylesheet" type="text/css" href="static/style/leafbox.min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/norm-div-modal.css">
+    <link rel="stylesheet" type="text/css" href="static/style/menus-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/acordeon.css">
+    <link rel="stylesheet" type="text/css" href="static/style/buttons-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/buttons-core-min.css">
+    <link rel="stylesheet" type="text/css" href="static/style/noty.css">
+    <link rel="stylesheet" type="text/css" href="static/style/uilspin.css">
+    <link rel="stylesheet" type="text/css" href="static/style/side-menu.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="static/style/leaflet.extra-markers.css">
+    <link rel="stylesheet" type="text/css" href="static/style/easy-button.css">
+    <link rel="stylesheet" type="text/css" href="static/style/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="static/style/gestion.css">
+    <link rel="icon" type="image/png" href="/static/images/drone.png" />  
+    
 
-<style>
-* {
-	color: black;
-	font-size:17px;
-}
-#header{
-	width:50%;
-	float:left;
-}
-#muestra{
-	width:50%;
-	float:right;
-}
-#opcionesabsolutas{
-	display:none;
-}
+</head>
+<body>
+<div id="layout">
+    <!-- Menu toggle -->
+    <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+    </a>
 
-/*body.disabled {
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
-  filter: contrast(30%);
-  -webkit-filter: contrast(30%);
-}*/
-</style>
-
-    <script>
-window.top.postMessage('gcs', '*');
-    </script>
-
-    <!--<script src="/static/scripts/ol.js" type="text/javascript"></script>-->
-    <title>Torre Acces Point</title>
-  </head>
-  <body >
     <div id="menu">
-	<ul>
-		<li><a href="/gestionmision">Gestionar Misión</a></li>
-		<li><a href="/">Misión Actual</a></li>
-		<li><a href="/listadofotos">Listado fotos</a></li>
-	</ul>
+      <div class="pure-menu custom-restricted-width">
+        <a class="pure-menu-heading" href="/">Inicio</a>
+        <ul class="pure-menu-list">
+	  <li class="pure-menu-item"><a href="/administracion" class="pure-menu-link"><br>Administración</a>
+	    <ul></ul>
+	  </li>
+          <li class="pure-menu-item"><a href="/gestionmision" class="pure-menu-link"><br>Gestionar recorrido</a>
+            <ul></ul>
+          </li>
+          <li class="pure-menu-item"><a href="/" class="pure-menu-link"><br>Misión actual</a>
+            <ul></ul>
+	  </li>
+          <li class="pure-menu-item"><a href="/listadomisiones" class="pure-menu-link"><br>Listado de misiones</a>
+            <ul></ul>
+          </li>
+          <li class="pure-menu-item"><a href="/listadofotos" class="pure-menu-link"><br>Listado de fotos</a>
+            <ul></ul>
+          </li>
+        </ul>
+      </div>
     </div>
-    <div id="header">
-	<h2>Crear nuevo recorrido</h2>
-	<table>
-		<tr>
-			<td>
-			      Nº padrón: <input type="text" name="padron" id="padron" value="" size="6" />
-			      <br/>
-			      Altura incial(m): <input type="text" name="alt" id="alt" value="" size="3" />
-			      <br/>
-			      Velocidad (m/s): <input type="text" name="vel" id="vel" value="" size="3" />
-			      <br/>
-
-				  Fotos x estaca: <SELECT name="cantpuntos" id="cantpuntos">
-					<OPTION value="3" selected="selected">3</OPTION>
-					<OPTION value="4">4</OPTION>
-					<OPTION value="5">5</OPTION>
-			      </SELECT>
-			      <br/>
-
-				  Cuenta/Distancia?:
-				  <select id="dist">
-					  <option value="0" selected="selected" >Cuenta</option>
-					  <option value="0.5"  >0.5</option>
-					  <option value="1.0" >1</option>
-					  <option value="1.5" >1.5</option>
-				  </select>
-			      <br/>
-
-				  Elegir umbral:
-				  <select id="umbral">
-					  <option value="0" selected="selected" >Sin umbral</option>
-					  <option value="0.5"  >0.5</option>
-					  <option value="1.0" >1</option>
-					  <option value="1.5" >1.5</option>
-				  </select>
-			      <br/>
-
-				  Solapamiento(0..1): <input type="text" name="solapamiento" id="solapamiento" value="0" size="3" />
-			      <br/>
-
-			      Tipo de recorrido: <SELECT name="tipo" id="tipo">
-					<OPTION value="0">Estacas</OPTION>
-					<OPTION value="1">Mapping</OPTION>
-			      </SELECT>
-				  <br/>
-				  Coord. Relativas?: <input type="checkbox" name="relativas" id="relativas" checked="checked" />
-
-			      <br/>
-			</td>
-			<td>
-			      &nbsp;
-			</td>
-		</tr>
-	</table>
-
-    <h2>Coordenadas</h2>
-	<table>
-		<tr>
-			<td>
-			      x: <input type="text" name="x" id="x" value="" size="6" />
-				<br/>
-			      y: <input type="text" name="y" id="y" value="" size="6" />
-				<br/>
-			      h: <input type="text" name="h" id="h" value="" size="6" />
-			      <br/>
-			      tipo:
-				<SELECT name="tipop" id="tipop">
-					<OPTION value="0">Estaca</OPTION>
-					<OPTION value="1">Común</OPTION>
-			      </SELECT><br/>
-				<div id="opcionesabsolutas">
-					<!-- Primero?: <input type="checkbox" name="primerestaca" id="primerestaca" checked="checked" /><br/>-->
-					<div id="posrelativa">
-						Relativas 1er punto: <br/>
-						x rel: <input type="text" name="xrel" id="xrel" value="" size="6" />
-						<br/>
-						y rel: <input type="text" name="yrel" id="yrel" value="" size="6" />
-						<br/>
-					</div>
-				</div>
-			</td>
-			<td>
-			      <!--<button id="header-ver-coordenada">Traer coord. actual </button>
-			      </br>-->
-			      <button id="header-add-coordenada">Agregar coordenada</button>
-				<br/>
-			      <!--<button id="header-ver-coordenadas">Ver coord. guardadas</button>
-			      <br/>-->
-			      <button id="header-del-mision">Borrar todas las coord.</button>
-			</td>
-		</tr>
-	</table>
-
-    <h2>Puntos a recorrer</h2>
-	<table border="1" id="puntosrec">
-		<tr>
-			<td>x</td><td>y</td><td>h</td><td>tipo</td>
-		</tr>
-	</table>
-	
-      <br/>
-      <button id="guardar-recorrido">Guardar Recorrido</button>
-      </br>
-
-      <!--</br>
-      <button id="header-salir">Salir</button>-->
-
+    <div id="main" style="min-height: 800px;">
+        <div class="content">
+            <div class="pure-g divGrandePureG" style="width: 100%;"> 
+            <div class="pure-u-1" style="text-align:center;"><h1>Gestionar Recorrido</h1></div>
+                <div class="pure-u-1 pure-u-lg-7-24 widgetCustom">
+                    <div class="l-box">
+                        <table class="pure-table pure-table-horizontal tablaCustom" >
+                            <tr>
+                                <th colspan="2" style="text-align: center;font-size: 1.17em;">
+                                    Crear nuevo recorrido
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="esconderTD">Nº padrón:</td>
+                                <td>
+                                    <span class="spanTD">Nº padrón</span>
+                                    <input type="text" name="padron" id="padron" value="" size="6">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="esconderTD">Altura incial(m):</td>
+                                <td>
+                                    <span class="spanTD">Altura incial(m)</span>
+                                    <input type="text" name="alt" id="alt" value="" size="3">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="esconderTD">Velocidad (m/s):</td>
+                                <td>
+                                    <span class="spanTD">Velocidad (m/s)</span>
+                                    <input type="text" name="vel" id="vel" value="" size="3">
+                                </td>
+                            </tr>
+                            <!--tr>
+                                <td class="esconderTD">Fotos x estaca:</td>
+                                <td>
+                                    <span class="spanTD">Fotos x estaca</span>
+                                    <SELECT name="cantpuntos" id="cantpuntos"><OPTION value="3" selected="selected">3</OPTION><OPTION value="4">4</OPTION><OPTION value="5">5</OPTION></SELECT>
+                                </td>
+                            </tr-->
+                            <!--tr>
+                                <td class="esconderTD">Cuenta/Distancia?:</td>
+                                <td>
+                                    <span class="spanTD">Cuenta/Distancia?</span>
+                                    <select id="dist"><option value="0" selected="selected" >Cuenta</option><option value="0.5"  >0.5</option><option value="1.0" >1</option><option value="1.5" >1.5</option></select>
+                                </td>
+                            </tr-->
+                            <tr>
+                                <td class="esconderTD">Elegir umbral:</td>
+                                <td>
+                                    <span class="spanTD">Elegir umbral</span>
+                                    <select id="umbral"><option value="0" selected="selected" >Sin umbral</option><option value="0.5"  >0.5</option><option value="1.0" >1</option><option value="1.5" >1.5</option></select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="esconderTD">Solapamiento(0..1):</td>
+                                <td>
+                                    <span class="spanTD">Solapamiento(0..1)</span>
+                                    <input type="text" name="solapamiento" id="solapamiento" value="0" size="3">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="esconderTD">Tipo de recorrido:</td>
+                                <td>
+                                    <span class="spanTD">Tipo de recorrido</span>
+                                    <SELECT name="tipo" id="tipo"><!--OPTION value="0">Estacas</OPTION--><OPTION value="1">Mapping</OPTION></SELECT>
+                                </td>
+                            </tr>
+                            <!--tr>
+                                <td class="esconderTD">Coord. Relativas?:</td>
+                                <td>
+                                    <span class="spanTD">Coord. Relativas?</span>
+                                    <input type="checkbox" name="relativas" id="relativas">
+                                </td>
+                            </tr-->
+			    <input type="hidden" name="alturaEstandar" id="alturaEstandar" value="30">
+                        </table>
+                        <br>
+                    </div>
+                </div>
+                <div class="pure-u-1 pure-u-md-11-24 pure-u-lg-7-24 widgetCustom widget2">
+                    <div class="l-box">
+                        <table class="pure-table pure-table-horizontal tablaCustom">
+                            <tr>
+                                <th colspan="2" style="text-align: center;font-size: 1.17em;">
+                                    Coordenadas
+                                </th>
+                            </tr>
+                            <!--tr>
+                                <td>Nombre:</td>
+                                <td><input type="text" name="nombrePunto" id="nombrePunto" value="" size="6" /></td>
+                            </tr-->
+                            <tr>
+                                <td>X:</td>
+                                <td><input type="text" name="x" id="x" value="" size="6"></td>
+                            </tr>
+                            <tr>
+                                <td>Y:</td>
+                                <td><input type="text" name="y" id="y" value="" size="6"></td>
+                            </tr>
+                            <tr>
+                                <td>H:</td>
+                                <td><input type="text" name="h" id="h" value="" size="6"></td>
+                            </tr>
+                            <tr>
+                                <td>Tipo:</td>
+                                <td><SELECT name="tipop" id="tipop"><OPTION value="0">Estaca</OPTION><OPTION value="1">Común</OPTION></SELECT></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="text-align:center; margin: 10px;">
+                                  <button class="button-success pure-button" id="header-add-coordenada">Agregar coordenada</button><br>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="pure-u-1 pure-u-md-11-24 pure-u-lg-7-24 widgetCustom widget2" >
+                    <div class="l-box">
+                        <h3>Acciones</h3>
+                            <ul class="pure-menu-list">    
+                                <li class="pure-menu-item">Fecha minima: <input type="date" name="fechaGpx1" id="fechaGpx1" value=""></li>
+                                <li class="pure-menu-item">Fecha maxima: <input type="date" name="fechaGpx2" id="fechaGpx2" value=""></li>
+                                <li class="pure-menu-item liButton"><button class="button-success pure-button" onclick="cargarGpx()">Cargar datos GPX</button>
+                                <!--li class="pure-menu-item liButton"><button class="button-secondary pure-button" onclick="dibujarRectangulo()">Calcular Area </button></li-->
+                                <!--li class="pure-menu-item liButton"><button class="button-warning pure-button" onclick="limpiarMapa()">Limpiar Mapa</button></li-->
+                                <li class="pure-menu-item liButton"><button class="button-error pure-button" id="header-del-mision">Borrar todas las coord.</button></li>
+                            
+                            </ul>
+                           
+                    </div>
+                </div>
+                <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4" style="margin: 0 auto; width: 1000px; max-width: 1100px; max-height: 800px;text-align: center;">
+                    <div class="l-box">
+                        <div id = "map" style="margin-top: 20px; width: 100%; height: 400px; box-shadow: 5px 5px 5px #888">
+                        </div>
+                    </div>
+                </div>
+                <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4" style="width: 100%; text-align: center;">
+                    <div class="l-box">
+                        <br>
+                        <h3>Puntos a recorrer</h3>
+                        <table class="pure-table pure-table-bordered" style="font-size: small; margin: 0 auto;" id="puntosrec">
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                    Nombre
+                                </td>
+                                <td>
+                                    X
+                                </td>
+                                <td>
+                                    Y
+                                </td>
+                                <td>
+                                    H
+                                </td>
+                                <td>
+                                    Tipo
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <button class="button-xsmall pure-button button-success " id="guardar-recorrido">Guardar recorrido</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <script type="text/javascript" src="/static/scripts/realtime.js"></script>
-  </body>
+    <div class="footer">
+        <div class="pure-g">
+            <div class="pure-u-1" style="height: 80px; background-color:#191818; color:white; text-align: center;"><br><br>Tesis de grado 2017</div>
+        </div>
+    </div>
+</div>
+<script src="static/scripts/jquery.min.js"></script>
+<script src="static/scripts/menus.js"></script>
+<script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+<script src="static/scripts/leaflet.extra-markers.js"></script>
+<script src="static/scripts/easy-button.js"></script> 
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXymPhP6l6H6iVADLEpN_vtJfLThQGh18&callback=inicioGoogle"></script>
+<script src="static/scripts/mapas.js"></script>
+<script src="static/scripts/noty.js"></script>
+<script src="static/scripts/ui.js"></script>
+<script src="static/scripts/ourstyle.js"></script>
+<script src="static/scripts/realtime.js"></script>
+</body>
 </html>

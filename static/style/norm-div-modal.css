@@ -1,0 +1,8 @@
+@media (max-width: 879px) and (min-width: 300px){
+    #normalizame { margin-right: 65px; }
+    #normalizamedos { width: 100%; max-width: 100%; text-align: center; }
+}
+
+@media (min-width: 880px){
+    #normalizamedos { width: 800px; max-width: 800px; text-align: center; }
+}

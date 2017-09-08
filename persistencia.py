@@ -32,6 +32,21 @@ class Persistencia():
         return id
         #return 0
 
+    def borrarBD(self):
+        cursor=self.getCursor()
+        cursor.execute("DELETE FROM recorrido where 1=1")
+        
+        self.commit()
+
+    def borrarFotos(self, idMision):
+        cursor=self.getCursor()
+        if idMision != '0':
+            cursor.execute("DELETE FROM foto where url LIKE '"+idMision+"%'")
+        else:
+            cursor.execute("DELETE FROM foto where 1=1")
+        self.commit()
+
+        
     def guardarRecorrido(self, padron, alt, vel, tipo, fotosxestaca, calculodist, umbral,solapamiento):
         consulta="INSERT INTO recorrido (padron, altura, velocidad, tipo, fotosxestaca, calculodist, umbral, solapamiento) values (%s,%s,%s,%s, %s, %s, %s, %s) RETURNING ID"
         valores = (padron, alt, vel, tipo, fotosxestaca, calculodist, umbral, solapamiento)
@@ -43,6 +58,10 @@ class Persistencia():
         return self.correrInsert(consulta, valores)
 
     def guardarPunto(self, x, y, h, idai, esExacto):
+        #if nombre:
+         #   consulta = "INSERT INTO puntos (x,y,h,idai, nombre) values (%s,%s,%s,%s,%s) RETURNING ID"
+          #  valores = (x,y,h,idai,nombre)
+        
         consulta = "INSERT INTO puntos (x,y,h,idai) values (%s,%s,%s,%s) RETURNING ID"
         valores = (x,y,h,idai)
         idp = self.correrInsert(consulta, valores)

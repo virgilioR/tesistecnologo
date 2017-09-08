@@ -28,17 +28,14 @@ class Recorrido():
 			# Si el overlapping llegara a venir nulo
 			if self.solapamiento == None:
 				self.solapamiento = config.overlapping
-
 			self.idr = persistencia.guardarRecorrido(padron, alt, vel, tipo,self.fotosxestaca,self.calculodist,self.umbral, self.solapamiento)
-
 			coordsguardar=self.procInicialCoords(coords,esrel,xrel,yrel)
-
 			##DEPENDIENDO DEL TIPO DE RECORRIDO LLAMO GENERAR RECORRIDO ESTACAS O NO
 			if self.esEstacas():
 				self.genererRecorridoEstacas(coordsguardar, config.angulocamlargo, config.alturaestacavisible, cantpuntos, dist, self.umbral, persistencia)
 			else:
 				self.genererRecorridoMapping(coordsguardar, config.angulocamancho, config.angulocamlargo, self.solapamiento, self.umbral, persistencia)
-
+			print("guarda4")
 			#else:
 			#self.genererRecorridoMapping(coordsguardar, dist, persistencia)
 
@@ -251,6 +248,7 @@ class Recorrido():
 	def genererRecorridoEstacas(self, coordsguardar, angulocamlargo, alturaestacavisible, cantpuntos, calculodist, umbral, persistencia):
 		#def genererRecorridoEstacas(self,coordsguardar,dist,cantpuntos, persistencia):
 		#Si hay que hacer la cuenta la hacemos
+		
 		if calculodist==0:
 			##Definición de la distancia adecuado de la estaca donde tomar la foto
 			alfa = radians(float(90) - (angulocamlargo / float(2)))
@@ -276,6 +274,7 @@ class Recorrido():
 		yant = 0
 		coordactual = coordsguardar[0]
 		# Crear la primera Area
+
 		[x, y, h, tipo] = coordactual
 		#coordsordenadas=[]
 
@@ -283,7 +282,7 @@ class Recorrido():
 		#descomentar esto
 		coordsordenadas = self.ordenarcoords(coordsguardar)
 		#print coordsordenadas
-
+		print "ordena"
 		# PEQUEÑO HACK PORQUE DEMORA MUCHO
 		# coordsordenadas = [[0, 0, 5.0, 1], [6.16, 10.23, 5.0, 0], [15.5, 6.49, 5.0, 0], [13.98, -4.78, 5.0, 0],
 		# [-1.31, -15.49, 5.0, 0], [10.43, -18.77, 5.0, 0], [22.07, -21.72, 5.0, 0],
@@ -296,10 +295,13 @@ class Recorrido():
 		ai=None
 		#Completar el pedazo de la dada de alta de areas de interes
 		for coordactual in coordsordenadas:
+			print "estoy en el for"
 			##Crear la nueva area
 			[x, y, h, tipo] = coordactual
 			auxai = ai
+			print "antes de ir a AreaInteres"
 			ai = AreaInteres(tipo, None, self.idr, x, y, h, xant, yant, dist, cantpuntos, umbral, persistencia)
+			print "vuelvo de AreaInteres"
 			self.areasinteres.append(ai)
 			xant = x
 			yant = y
@@ -400,6 +402,7 @@ class Recorrido():
 				#print [x, y, h, tipo]
 				coordsguardar.append([x, y, h, tipo])
 		print "FIN Vamo a ver que coordenada da*****************"
+		print coordsguardar
 		return coordsguardar
 
 	def getId(self):

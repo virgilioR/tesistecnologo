@@ -1,0 +1,40 @@
+* {
+    color: black;
+    font-size:17px;
+}
+
+#header{
+    width:50%;
+    float:left;
+}
+
+#muestra{
+    width:50%;
+    float:right;
+}
+
+/*#header { 
+  position: absolute;
+  left: 20px;
+  color: white;
+  z-index: 100;
+  font-family: Sans;
+  margin-top: 20px;*/
+}
+/*html, body, .map {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+.ol-zoom {
+  right: 20px !important;
+  left: initial;
+}*/
+
+body.disabled {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  filter: contrast(30%);
+  -webkit-filter: contrast(30%);
+}

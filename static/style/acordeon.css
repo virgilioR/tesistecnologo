@@ -1,0 +1,58 @@
+
+ul.acorh,
+ul.acorh * {
+margin: 0;
+padding: 0;
+border: 0;
+}
+ul.acorh {
+margin: 10px auto;
+padding: 0;
+list-style: none;
+width: 100%;
+font-size: 18px;
+}
+ul.acorh li {
+list-style: none;
+}
+ul.acorh li a {
+display: block;
+padding: 10px 10px 10px 20px;
+background: #191818;
+color: #999;
+text-decoration: none;
+}
+ul.acorh li ul {
+max-height: 0;
+margin: 0;
+padding: 0;
+list-style: none;
+overflow: hidden;
+transition: .3s all ease-in;
+}
+ul.acorh li li a {
+padding: 10px 10px 10px 40px;
+background: #282828;
+color: #999;
+font-size: 16px;
+}
+ul.acorc li li:last-child a {
+border-bottom: 0;
+}
+ul.acorh li:target ul {
+max-height: 300px;
+transition: .3s all ease-in;
+}
+ul.acorh li a:hover {
+background: #C0C0C0;
+color: #999;
+}
+
+.desplegable{
+    transition: 0.4s;
+}
+
+.desplegable-hijo{
+    max-height: 0;
+    transition: max-height 0.2s ease-out;
+}

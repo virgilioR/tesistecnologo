@@ -1,0 +1,151 @@
+
+#main{
+	background-color: #f2f4f6;
+}
+#layout{
+	background-color: #f2f4f6;
+}
+.customWidget{
+	border-radius: 15px; 
+	margin-top: 30px; 
+	margin-right: 15px; 
+	margin-left: 15px;
+	height: 300px;
+	text-align: center;
+	background-color: #fff;
+}
+
+@media screen and (min-width: 430px) and (max-width: 767px)  {
+    .customWidget{
+		height: 230px;
+	}
+}
+@media screen and (max-width: 429px)  {
+    .customWidget{
+		height: 250px;
+	}
+}
+
+.widgetConexion{
+    height: 100px;
+	border-radius: 15px; 
+	margin-top: 30px;
+	text-align: center;
+}
+
+.dronConectado {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+	border: 5px solid #3c763d;
+}
+
+.dronDesconectado{
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+	border: 5px solid #a94442;
+}
+
+.widgetAcciones{
+	height: 100px;
+	border-radius: 15px; 
+	margin-top: 30px;
+	text-align: center;
+	border: 5px solid rgb(66, 184, 221); 
+	background-color: #fff;
+}
+
+.widgetConsola{
+	margin-top: 5px;
+	background-color: white; 
+	height: 400px; 
+	max-height: 400px; 
+	width: 100%; 
+	overflow-y: scroll;
+	border: 5px solid rgb(66, 184, 221); 
+	border-radius: 15px; 
+}
+.botonAccion{
+	width: 100px;
+}
+
+.widgetAccionesDron{
+	height: 180px;
+}
+
+
+@media only screen and (max-width: 	568px)  {
+    .widgetAcciones{
+		height: 180px;
+	}
+}
+
+@media screen and (min-width: 569px) and (max-width: 767px) {
+    .widgetAcciones{
+		height: 140px;
+	}
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .widgetAcciones{
+		height: 150px;
+	}
+}
+
+@media screen and (max-width: 568px)  {
+    .widgetAccionesDron{
+		height: 440px;
+	}
+}
+
+@media screen and (min-width: 569px) and (max-width: 767px)  {
+    .widgetAccionesDron{
+		height: 320px;
+	}
+}
+
+h2{
+    margin-top: 5px;
+    margin-bottom: 6px;
+}
+
+.btnAcciones{
+	margin-top: 5px;
+}
+
+.mensajeConectado{
+	display: none;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px)  {
+    .pure-u-md-7-24{
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+}
+
+@media only screen and (min-width: 789px) and (max-width: 880px)  {
+    .pure-u-md-7-24{
+		height: 350px;
+	}
+}
+
+@media only screen and (min-width: 768px) and (max-width: 804px)  {
+    .pure-u-md-7-24{
+		height: 380px;
+	}
+}
+
+@media only screen and (min-width: 1025px) and (max-width: 1176px)  {
+    .pure-u-md-7-24{
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+}
+
+
+@media screen and (max-width: 336px)  {
+    .widgetConexion{
+		height: 130px;
+	}
+}
