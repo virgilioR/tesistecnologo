@@ -659,4 +659,10 @@
     margin-left: 95px;
 }
 
+.btn-noty-success2{
+    background-color: rgba(43,171,41,0.9);
+    color: white;
+    margin-left: 40%;
+}
+
 /*# sourceMappingURL=noty.css.map*/
