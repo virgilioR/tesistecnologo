@@ -25,6 +25,17 @@
 		height: 250px;
 	}
 }
+@media screen and (min-width: 321px) and (max-width: 380px)  {
+    .customWidget{
+		height: 275px;
+	}
+}
+
+@media screen and (max-width: 320px)  {
+    .customWidget{
+		height: 300px;
+	}
+}
 
 .widgetConexion{
     height: 100px;
@@ -71,11 +82,16 @@
 }
 
 .widgetAccionesDron{
-	height: 180px;
+	height: 370px !important; 
 }
 
+@media only screen and (max-width: 400px)  {
+    .widgetAcciones{
+		height: 200px;
+	}
+}
 
-@media only screen and (max-width: 	568px)  {
+@media only screen and (min-width: 	401px) and (max-width: 	568px)  {
     .widgetAcciones{
 		height: 180px;
 	}
@@ -94,8 +110,13 @@
 
 @media screen and (max-width: 568px)  {
     .widgetAccionesDron{
-		height: 440px;
+		height: 520px !important;
 	}
+.seccionAterrizar{
+	margin-left: -35px;	
+}
+
+
 }
 
 @media screen and (min-width: 569px) and (max-width: 767px)  {

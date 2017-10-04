@@ -166,6 +166,7 @@
 		      <p style="margin-bottom: 0px;">Simulador </p>
 		      <input type="checkbox" name="simular" id="simular" value="1"><br>
 		      <input type="hidden" value="{{ cadenaconexion }}" id="cadena"><br>
+		      <input type="hidden" value="{{ fechaseteada }}" id="fechaSeteada">
 		    </div>
 		    
 		    <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4 norm-pure-insider-1 skyblue-border">
@@ -284,5 +285,81 @@
 <script src="static/scripts/remodal.min.js"></script>
 <script src="static/scripts/ourstyle.js"></script>
 <script src="static/scripts/realtime.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var estaSeteado = jQuery("#fechaSeteada").val();
+		var date  = new Date(),
+	    year  = date.getFullYear(),
+	    month = date.getMonth() + 1,
+	    day   = date.getDate(),
+	    hour  = date.getHours(),  
+	    min   = date.getMinutes(); 
+		month = (month < 10 ? '0' + month : month);
+		day   = (day   < 10 ? '0' + day   : day  ); 
+		hour  = (hour  < 10 ? '0' + hour  : hour );
+		min   = (min   < 10 ? '0' + min   : min  );
+
+		if(estaSeteado == "False"){
+			console.log("No esta seteado");
+			var n = new Noty({
+			  text: 'La fecha actual es la siguiente, puede cambiarla si lo desea <br><input id="nuevaFecha" type="date" value="'+year + '-' + month + '-' + day +'"> <input type="time" id="nuevoTiempo" value="'+hour + ':' + min+'"/>',
+			  closeWith: 'button',
+			  layout: 'topRight',
+			  theme: 'mint',
+			  buttons: [
+			    Noty.button('OK', 'btn btn-success', function () {
+
+			        var fechaParaMandar = jQuery("#nuevaFecha").val() + " " + jQuery("#nuevoTiempo").val();
+			        
+			        n.close();
+
+			        $.ajax({
+				        method: 'POST',
+				        url: '/api/cambiarfecha',
+				        contentType : 'application/json',
+				        data:  JSON.stringify({ fecha: fechaParaMandar})
+				    }).done(function( msg ) {
+				        if (msg.ok){
+				        	new Noty({
+								type: 'success',
+								layout: 'topRight',
+								theme: 'mint',
+						  		text: 'Se cambió la fecha del sistema',
+								timeout: 5000,
+								progressBar: true,
+								closeWith: ['click', 'button'],
+								animation: {
+								    open: 'noty_effects_open',
+								    close: 'noty_effects_close'
+								},
+				  		    }).show();
+				        }
+				        else{
+				        	new Noty({
+								type: 'error',
+								layout: 'topRight',
+								theme: 'mint',
+						  		text: 'No se pudo cambiar la fecha del sistema',
+								timeout: 5000,
+								progressBar: true,
+								closeWith: ['click', 'button'],
+								animation: {
+								    open: 'noty_effects_open',
+								    close: 'noty_effects_close'
+								},
+				  		    }).show();
+				        }
+				        
+				    });
+			    }, {id: 'button1', 'data-status': 'ok'})
+			  ]
+			}).show();
+		} else {
+			console.log("Esta seteado");
+		}
+	});
+
+
+</script>
 </body>
 </html>

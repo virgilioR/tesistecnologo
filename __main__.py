@@ -28,6 +28,7 @@ conectado=False
 listeners_location = []
 controlador=None
 #configuracion=None
+fechaSeteada = False
 
 def imprimir(texto):
 	print (texto) 
@@ -51,23 +52,25 @@ app = Flask(__name__)
 @app.route("/")
 def home():
 	global controlador
+	global fechaSeteada
 	cadenaconexion=controlador.getConfig().cadenaconexion
 	print cadenaconexion
-	return render_template('index.html', cadenaconexion=cadenaconexion, branding=False)
+	return render_template('index.html', cadenaconexion=cadenaconexion, fechaseteada=fechaSeteada, branding=False)
 
 @app.route("/demo")
 def demo():
 	return render_template('demo.html', branding=False)
 
-
 @app.route("/api/cambiarfecha", methods=['POST'])
 def cambiarfecha():
+	global fechaSeteada
 	try:
 		fechastr=str(request.json['fecha'])
 		#fecha=datetime.da(request.json['fecha'])
 		print fechastr
 		print "seteamos la fecha en el sistema"
 		system("date -s '"+fechastr+"'")
+		fechaSeteada = True
 		return jsonify(ok=True)
 	except Exception as e:
 		imprimir(str(e))

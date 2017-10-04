@@ -195,7 +195,7 @@ $('#header-despegar').on('click', function () {
 			    type: 'success',
 			    layout: 'topRight',
 			    theme: 'mint',
-			    text: 'Mision finalizada',
+			    text: 'Prueba finalizada',
 			    timeout: 5000,
 			    progressBar: true,
 			    closeWith: ['click', 'button'],
@@ -671,7 +671,7 @@ $('#header-conectar-desconectar').on('click', function () {
 	    method: 'PUT',
 	    url: '/api/conectar',
 	    contentType : 'application/json',
-	    //data: JSON.stringify({ cadena: 'tcp:192.168.1.45:5760', sim:sim }),
+	    //data: JSON.stringify({ cadena: 'tcp:192.168.1.44:5760', sim:sim }),
 	    //data: JSON.stringify({ cadena: 'udp:127.0.0.1:14550' })
 	    data: JSON.stringify({ cadena: $("#cadena").val(), sim:sim })
 	})
@@ -909,7 +909,12 @@ source.onmessage = function (event) {
   idsel=$('#selrec').find("option:selected").val();
 
   $('#bateria').html(msg.bateria+"%");
-  //$('#satelites').html(msg.satelites);
+    var sat = '';
+    if (msg.satelites.indexOf(',') != -1){
+	var aux = msg.satelites.split(',');
+	sat = aux[1].replace('num_sat=','') + ' / '  + aux[0].replace('GPSInfo:','');
+    }
+    $('#satelites').html(sat);
 
   if (entreCombo==false) {
     $('#selrec').html("<option value='0'>Ningún recorrido</option>");

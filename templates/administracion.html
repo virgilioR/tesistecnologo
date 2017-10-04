@@ -119,21 +119,55 @@
             <div class="l-box" style="padding: 5px;">
               <h2>Acciones del drone</h2>
               <div class="pure-g">
-                <div class="pure-u-1-2 pure-u-sm-1-3 pure-u-md-1-5 pure-u-lg-1-5">
+                <div class="pure-u-1-2 pure-u-sm-1-3 pure-u-md-1-4 pure-u-lg-1-4">
                   <button style="margin: 10px;" class="button-small pure-button botonAccion" id="header-arm"><img src="static/images/settings.png" height="40" width="40" title="Armar/Desarmar"><br><p style="font-size: 75%;">Armar<br>Desarmar</p></button>
                 </div>
-                <div class="pure-u-1-2 pure-u-sm-1-3 pure-u-md-1-5 pure-u-lg-1-5">
+                <div class="pure-u-1-2 pure-u-sm-1-3 pure-u-md-1-4 pure-u-lg-1-4">
                   <button style="margin: 10px;" class="button-small pure-button botonAccion" id="header-una-foto"><img src="static/images/photo-camera.png" height="40" width="40" title="Sacar foto"><p style="font-size: 75%;">Sacar<br>foto</p></button>
                 </div>
-                <div class="pure-u-1-2 pure-u-sm-1-3 pure-u-md-1-5 pure-u-lg-1-5">
-                  <button style="margin: 10px;" class="button-small pure-button botonAccion" id="header-despegar"><img src="static/images/paper-plane-1.png" height="40" width="40" title="Despegar/Aterrizar"><p style="font-size: 75%;">Despegar<br>Aterrizar</p></button>
-                </div>
-                <div class="pure-u-1-2 pure-u-sm-1-2 pure-u-md-1-5 pure-u-lg-1-5">
+                <div class="pure-u-1-2 pure-u-sm-1-3 pure-u-md-1-4 pure-u-lg-1-4">
                   <button style="margin: 10px;" class="button-small pure-button botonAccion" id="header-mode-land"><img src="static/images/warning.png" height="40" width="40" title="Aterrizaje de emergencia (LAND)"><p style="font-size: 75%;"><br>Land</p></button>
                 </div>
-                <div class="pure-u-1 pure-u-sm-1-2 pure-u-md-1-5 pure-u-lg-1-5">
+                <div class="pure-u-1-2 pure-u-sm-2-5 pure-u-md-1-4 pure-u-lg-1-4">
                   <button style="margin: 10px;" class="button-small pure-button botonAccion" id="header-fin-mision"><img src="static/images/home.png" height="40" width="40" title="Volver a casa (RTL)"><p style="font-size: 75%;"><br>RTL</p></button>
                 </div>
+
+                <div class="pure-u-1-3 pure-u-sm-1-5 pure-u-md-2-5 pure-u-lg-2-5">
+                </div>
+                <div class="pure-u-1-3 pure-u-sm-1-5 pure-u-md-1-5 pure-u-lg-1-5 seccionAterrizar">
+                  <table>
+                    <tr>
+                      <td colspan="2">
+                  
+                  <button style="margin: 10px;" class="button-small pure-button botonAccion" id="header-despegar"><img src="static/images/paper-plane-1.png" height="40" width="40" title="Despegar/Aterrizar"><p style="font-size: 75%;">Despegar<br>Aterrizar</p></button>
+                        
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Altura(m)    
+                      </td>
+                      <td>
+                        <input type="text" style="width: 50px" name="alt" id="alt"  value="">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="margin-right: 10px;">
+                        Velocidad(m/s)  
+                      </td>
+                      <td>
+                        <input  type="text" style="width: 50px" name="vel" id="vel" value="">
+                      </td>
+                    </tr>
+                  </table>
+                  
+                  
+                  
+                </div>
+                <div class="pure-u-1-3 pure-u-md-2-5 pure-u-lg-2-5">
+                </div>
+
+
               </div>
             </div>
           </div>
@@ -166,5 +200,6 @@
 <script src="static/scripts/remodal.min.js"></script>
 <script src="static/scripts/ourstyle.js"></script>
 <script src="static/scripts/ajax.js"></script>
+<script src="static/scripts/realtime.js"></script>
 </body>
 </html>
